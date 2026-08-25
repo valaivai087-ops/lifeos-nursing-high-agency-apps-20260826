@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日常升維指令碼700 | Daily Upgrade Scripts 700 | High Agency OS</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+  background: #ffffff;
+  color: #1A2B5F;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+header {
+  background: linear-gradient(135deg, #1A2B5F 0%, #0A7A72 100%);
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+header .subtitle {
+  font-size: 16px;
+  color: #C9960C;
+  font-weight: 500;
+  margin: 5px 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.controls {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.search-box {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+  min-width: 300px;
+}
+
+.search-box input {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #0A7A72;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'Microsoft JhengHei', sans-serif;
+}
+
+.search-box button {
+  padding: 12px 25px;
+  background: #0A7A72;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.search-box button:hover {
+  background: #085a52;
+}
+
+.items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item-card {
+  border-left: 4px solid #C9960C;
+  background: #f9f9f9;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.item-header {
+  padding: 16px 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f9f9;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.item-header:hover {
+  background: #f0f0f0;
+}
+
+.item-num {
+  color: #C9960C;
+  font-weight: bold;
+  min-width: 50px;
+  font-size: 16px;
+}
+
+.item-text {
+  flex: 1;
+  color: #333;
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-toggle {
+  color: #0A7A72;
+  font-size: 18px;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+  margin-left: 10px;
+}
+
+.item-header.expanded .item-toggle {
+  transform: rotate(180deg);
+}
+
+.item-content {
+  display: none;
+  padding: 25px;
+  background: white;
+}
+
+.item-content.show {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.lang-section {
+  padding: 20px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.lang-header {
+  color: #1A2B5F;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #C9960C;
+  padding-bottom: 8px;
+}
+
+.lang-content {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #333;
+  word-break: break-word;
+  margin-bottom: 15px;
+}
+
+.tts-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #0A7A72;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.tts-btn:hover {
+  background: #085a52;
+}
+
+.tts-btn.playing {
+  background: #C9960C;
+}
+
+footer {
+  text-align: center;
+  padding: 30px 20px;
+  color: #666;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 60px;
+  font-size: 14px;
+}
+
+.author-line {
+  font-weight: bold;
+  color: #1A2B5F;
+  margin: 8px 0;
+}
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 26px;
+  }
+  
+  .item-content.show {
+    grid-template-columns: 1fr;
+  }
+  
+  .controls {
+    flex-direction: column;
+  }
+  
+  .search-box {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .item-text {
+    font-size: 14px;
+  }
+}
+
+.stats {
+  text-align: center;
+  padding: 15px;
+  background: #f0f8ff;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #666;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>日常升維指令碼 700</h1>
+  <div class="subtitle">Daily Upgrade Scripts 700</div>
+  <div class="subtitle">High Agency OS | 自我更新生命作業系統</div>
+  <div class="subtitle" style="font-size: 14px; margin-top: 10px;">By 王欣蓉 Anne Wang</div>
+</header>
+
+<div class="container">
+  <div class="stats">
+    <strong>700 Daily Upgrade Scripts</strong> | 完整版雙語互動學習系統 | Every script generates a predictable upgrade loop: Observe → Diagnose → Predict → Test → Update
+  </div>
+
+  <div class="controls">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="搜尋中文或英文 / Search Chinese or English..." onkeyup="filterItems()">
+      <button onclick="clearSearch()">Clear</button>
+    </div>
+  </div>
+
+  <div class="items-container" id="itemsContainer"></div>
+</div>
+
+<footer>
+  <p>《一個自動運作的內在控制器》</p>
+  <p>An internally automated control system that updates itself through continuous feedback loops.</p>
+  <p class="author-line">智慧不是永遠正確 | 而是錯誤出現後能快速更新</p>
+  <p class="author-line">Wisdom Is Not Never Being Wrong | It's Updating Quickly When Error Occurs</p>
+  <p class="author-line">作者 Author: 王欣蓉 Anne Wang</p>
+  <p style="margin-top: 15px;">© 2026 High Agency OS | Bilingual Interactive Learning System</p>
+</footer>
+
+<script>
+const scriptData = [
+{num: 1, ch: "01｜逃避問題→分析支出結構→先看問題正在消耗什麼。", en: "Avoidance of Problems → Analyze Expenditure Structure → First, see what the problem is currently consuming."},
+{num: 2, ch: "02｜一直提舊傷→建立新經驗→不要只重播記憶，開始增加新資料。", en: "Keep Bringing Up Old Wounds → Build New Experiences → Don't just replay memory; start adding new data."},
+{num: 3, ch: "03｜追求完美→先完成70分→完成後再迭代。", en: "Pursuit of Perfection → Complete 70% First → Iterate After Completion."},
+{num: 4, ch: "04｜習慣拖延→承認害怕失敗→先處理阻力，不先責怪自己。", en: "Habitual Procrastination → Acknowledge Fear of Failure → Address Resistance First, Not Self-Blame."},
+{num: 5, ch: "05｜討好別人→保護自己的能量→善良不等於無限供應。", en: "People-Pleasing → Protect Your Energy → Kindness Does Not Equal Infinite Supply."},
+{num: 6, ch: "06｜害怕孤單→學習與自己相處→降低對外部陪伴的依賴。", en: "Fear of Loneliness → Learn to Be With Yourself → Reduce Dependence on External Companionship."},
+{num: 7, ch: "07｜只追求快樂→建立真正穩定→快樂會波動，穩定才能承載波動。", en: "Only Pursue Happiness → Build True Stability → Happiness Fluctuates; Stability Carries Fluctuation."},
+{num: 8, ch: "08｜害怕犯錯→允許誤差成為回饋→錯誤不是判決，是資料。", en: "Fear of Making Mistakes → Allow Error as Feedback → Error Is Not Judgment; It's Data."},
+{num: 9, ch: "09｜自動反應→深度觀察再回應→在刺激與反應之間增加選擇空間。", en: "Automatic Response → Deep Observation Then Response → Expand Choice Space Between Stimulus and Response."},
+{num: 10, ch: "10｜事情很多→找Priority Node→不要平均用力，先做最高槓桿的一件。", en: "Too Many Things → Find Priority Node → Don't Spread Effort Evenly; Do the Highest-Leverage Item First."},
+{num: 11, ch: "11｜一直焦慮→找出真正未知→焦慮常是未被拆解的不確定性。", en: "Constant Anxiety → Find the True Unknown → Anxiety Often Is Undecomposed Uncertainty."},
+{num: 12, ch: "12｜害怕未來→處理下一個可控節點→不要一次解決還沒發生的人生。", en: "Fear of Future → Handle the Next Controllable Node → Don't Solve a Future Life That Hasn't Happened."},
+{num: 13, ch: "13｜一直後悔→提取Prediction Error→把後悔轉成下一次的模型更新。", en: "Constant Regret → Extract Prediction Error → Turn Regret Into Next Model Update."},
+{num: 14, ch: "14｜責怪自己→診斷生成機制→從『我不好』改成『哪個環節失準』。", en: "Blame Yourself → Diagnose Generation Mechanism → Shift From 'I'm Bad' to 'Which Step Failed?'"},
+{num: 15, ch: "15｜責怪別人→找自己的控制圈→不必替別人負責，但要找回自己的控制權。", en: "Blame Others → Find Your Control Circle → Take Responsibility for Others? No. Reclaim Your Control."},
+{num: 16, ch: "16｜遇事硬撐→檢查系統負荷→撐住不是唯一策略，降載也是能力。", en: "Force Through Problems → Check System Load → Persisting Isn't the Only Strategy; Reducing Load Is a Skill."},
+{num: 17, ch: "17｜一直努力→先找Bottleneck→錯誤方向上的努力只會增加耗散。", en: "Constant Effort → Find the Bottleneck First → Effort in Wrong Direction Only Increases Waste."},
+{num: 18, ch: "18｜想一次改變→Minimum Intervention→先找最小有效改變。", en: "Want to Change All at Once → Minimum Intervention → Find the Smallest Effective Change First."},
+{num: 19, ch: "19｜沒有動力→降低啟動門檻→不要等動力，先讓第一步足夠小。", en: "No Motivation → Lower the Starting Threshold → Don't Wait for Motivation; Make the First Step Small."},
+{num: 20, ch: "20｜一直想很多→建立小實驗→思考的終點是取得新資料。", en: "Think Too Much → Conduct Small Experiments → Thinking's Endpoint Is Obtaining New Data."},
+{num: 21, ch: "21｜怕別人拒絕→把拒絕當資料→拒絕不是人格判決，而是匹配資訊。", en: "Fear Rejection → Treat Rejection as Data → Rejection Isn't Personal; It's Matching Information."},
+{num: 22, ch: "22｜害怕被討厭→區分價值與評價→別人的評價不是你的本體價值。", en: "Fear Being Disliked → Distinguish Value From Evaluation → Others' Evaluation Isn't Your Essential Value."},
+{num: 23, ch: "23｜怕被批評→尋找有效訊號→不要吞下全部批評，只提取有用資料。", en: "Fear Criticism → Find Valid Signals → Don't Swallow All Criticism; Extract Useful Data Only."},
+{num: 24, ch: "24｜一直比較→改看自己的Baseline→比較的目的應是校準，不是羞辱自己。", en: "Constant Comparison → Look at Your Baseline → Comparison Should Calibrate, Not Shame You."},
+{num: 25, ch: "25｜羨慕別人→辨識自己真正想要什麼→嫉妒有時是需求偵測器。", en: "Envy Others → Identify What You Truly Want → Jealousy Is Sometimes a Need Detector."},
+{num: 26, ch: "26｜看到別人成功→拆解成功機制→不要崇拜結果，要研究生成條件。", en: "See Others Succeed → Deconstruct Success Mechanism → Don't Worship Results; Study Generating Conditions."},
+{num: 27, ch: "27｜看到別人失敗→提取風險資料→別人的錯誤也可以降低自己的試錯成本。", en: "See Others Fail → Extract Risk Data → Others' Mistakes Can Reduce Your Trial-and-Error Cost."},
+{num: 28, ch: "28｜失敗就放棄→重新形成假設→一次結果不足以否定整條路。", en: "Fail Then Give Up → Reform Hypothesis → One Result Isn't Enough to Negate an Entire Path."},
+{num: 29, ch: "29｜成功就自滿→找真正成功變數→不要把運氣誤認成能力。", en: "Success Then Complacency → Find True Success Variables → Don't Mistake Luck for Ability."},
+{num: 30, ch: "30｜運氣不好→增加可控變數→無法控制隨機性，但可以提高成功機率。", en: "Bad Luck → Increase Controllable Variables → Can't Control Randomness; Can Increase Success Probability."},
+{num: 31, ch: "31｜害怕改變→設計可逆實驗→不需要一次押上全部人生。", en: "Fear Change → Design Reversible Experiments → No Need to Bet Your Whole Life at Once."},
+{num: 32, ch: "32｜想等準備好→邊做邊取得資料→很多準備只能在行動中完成。", en: "Want to Wait Until Ready → Get Data While Doing → Much Preparation Only Completes During Action."},
+{num: 33, ch: "33｜不知道選哪個→比較可逆性→優先測試低成本、可回頭的選項。", en: "Don't Know Which to Choose → Compare Reversibility → Prioritize Testing Low-Cost, Reversible Options."},
+{num: 34, ch: "34｜選錯很痛苦→更新決策模型→好決策不保證每次都有好結果。", en: "Wrong Choice Hurts → Update Decision Model → Good Decisions Don't Guarantee Good Results Every Time."},
+{num: 35, ch: "35｜什麼都想要→承認機會成本→每個Yes背後都有一個No。", en: "Want Everything → Acknowledge Opportunity Cost → Behind Every Yes Is a No."},
+{num: 36, ch: "36｜捨不得放棄→檢查沉沒成本→已經投入多少，不等於還要繼續投入。", en: "Can't Let Go → Check Sunk Cost → What You've Invested Doesn't Mean You Should Keep Investing."},
+{num: 37, ch: "37｜一直加東西→先做減法→高熵系統通常需要刪除，不是增加。", en: "Keep Adding → Do Subtraction First → High-Entropy Systems Usually Need Deletion, Not Addition."},
+{num: 38, ch: "38｜生活很亂→建立固定節點→不要每天重新決定所有事情。", en: "Life Is Chaotic → Establish Fixed Nodes → Don't Redesign Everything Daily."},
+{num: 39, ch: "39｜時間不夠→重新配置權重→時間問題常常其實是優先順序問題。", en: "Not Enough Time → Reconfigure Weights → Time Problems Are Often Priority Problems."},
+{num: 40, ch: "40｜每天很忙→檢查有效輸出→忙碌不是價值的證據。", en: "Busy Every Day → Check Effective Output → Busyness Isn't Evidence of Value."},
+{num: 41, ch: "41｜做事很慢→先降低切換成本→問題可能不是速度，而是注意力破碎。", en: "Do Things Slowly → Lower Switching Cost → Problem Might Be Fragmented Attention, Not Speed."},
+{num: 42, ch: "42｜一直分心→修改環境→不要只要求意志力抵抗高刺激環境。", en: "Constant Distraction → Modify Environment → Don't Just Ask Willpower to Resist High-Stimulus Environment."},
+{num: 43, ch: "43｜手機停不下來→增加使用摩擦→讓壞習慣難一點，讓好習慣容易一點。", en: "Can't Stop Phone → Increase Usage Friction → Make Bad Habits Harder; Make Good Habits Easier."},
+{num: 44, ch: "44｜熬夜補進度→保護明天的認知能力→不要用明天的生命償還今天的工作。", en: "Stay Up Late for Progress → Protect Tomorrow's Cognitive Ability → Don't Repay Today's Work With Tomorrow's Life."},
+{num: 45, ch: "45｜累了還逼自己→辨識恢復需求→休息不是退出系統，而是系統維護。", en: "Still Push When Tired → Recognize Recovery Need → Rest Isn't Quitting; It's System Maintenance."},
+{num: 46, ch: "46｜休息有罪惡感→把恢復納入產能→可持續輸出需要恢復週期。", en: "Guilty About Rest → Include Recovery in Productivity → Sustainable Output Requires Recovery Cycles."},
+{num: 47, ch: "47｜追求速度→先建立穩定節奏→最快不一定是最遠。", en: "Pursue Speed → Establish Stable Rhythm First → Fastest Isn't Always Farthest."},
+{num: 48, ch: "48｜一天做很多→看長期可持續性→問自己：這個速度能維持一年嗎？", en: "Do Much Per Day → Check Long-Term Sustainability → Can You Maintain This Pace for a Year?"},
+{num: 49, ch: "49｜行程塞滿→建立緩衝區→沒有Buffer的系統非常脆弱。", en: "Schedule Packed → Create Buffer Space → Systems Without Buffer Are Very Fragile."},
+{num: 50, ch: "50｜每件事都自己做→學會委派→High Agency不是所有事情親自完成。", en: "Do Everything Yourself → Learn to Delegate → High Agency Isn't Doing Everything Personally."},
+{num: 51, ch: "51｜不敢求助→建立支援網路→求助也是資源配置能力。", en: "Don't Dare Ask for Help → Build Support Network → Asking for Help Is Resource Allocation Skill."},
+{num: 52, ch: "52｜覺得問問題很笨→把提問當降低不確定性→好問題可以省掉大量錯誤。", en: "Think Asking Questions Is Stupid → Use Questions to Reduce Uncertainty → Good Questions Save Massive Errors."},
+{num: 53, ch: "53｜假裝自己知道→承認資訊缺口→『我不知道』是學習系統的入口。", en: "Pretend You Know → Acknowledge Information Gap → 'I Don't Know' Is Learning's Entry Point."},
+{num: 54, ch: "54｜急著找答案→先定義問題→錯誤問題得到再好的答案也沒有用。", en: "Hurry to Find Answers → Define Problem First → Wrong Questions Get Wrong Answers Even If Good."},
+{num: 55, ch: "55｜看到資訊就相信→檢查證據品質→資訊不是證據，聲量也不是真理。", en: "Believe Info Immediately → Check Evidence Quality → Information Isn't Evidence; Volume Isn't Truth."},
+{num: 56, ch: "56｜只找支持自己的資料→主動尋找反證→最好的模型必須能承受反方資料。", en: "Only Find Supporting Data → Actively Seek Contradictions → Best Models Can Take Counter-Evidence."},
+{num: 57, ch: "57｜把感覺當事實→分離感受與資料→感覺是真的，但感覺描述的世界未必完全是真的。", en: "Treat Feeling as Fact → Separate Feeling From Data → Feelings Are Real; Their Descriptions Might Not Be."},
+{num: 58, ch: "58｜一次事件就下結論→增加樣本→單次輸出不足以建立穩定Pattern。", en: "One Event Then Conclusion → Increase Sample Size → Single Output Can't Build Stable Pattern."},
+{num: 59, ch: "59｜凡事非黑即白→增加中間狀態→複雜世界通常不是只有0與1。", en: "Everything Black or White → Add Middle States → Complex World Usually Isn't Just 0 and 1."},
+{num: 60, ch: "60｜覺得一定會失敗→把預測寫出來→讓模糊恐懼變成可驗證假設。", en: "Think You'll Definitely Fail → Write Down Prediction → Make Vague Fear Into Testable Hypothesis."},
+{num: 61, ch: "61｜覺得一定會成功→建立失敗條件→樂觀也需要風險模型。", en: "Think You'll Definitely Succeed → Establish Failure Conditions → Optimism Needs Risk Model."},
+{num: 62, ch: "62｜一直猜別人在想什麼→直接取得資料→少讀心，多詢問。", en: "Keep Guessing Others' Thoughts → Get Direct Data → Less Mind-Reading; More Asking."},
+{num: 63, ch: "63｜別人沒回訊息→結果尚未出現→延遲不是拒絕。", en: "Others Don't Reply → Result Hasn't Appeared → Delay Isn't Rejection."},
+{num: 64, ch: "64｜別人態度不好→先描述事件→不要立刻把行為升級成人格判決。", en: "Others' Bad Attitude → Describe Event First → Don't Immediately Escalate Behavior to Character Judgment."},
+{num: 65, ch: "65｜發生衝突→找未對齊變數→衝突可能是資訊、需求、利益或邊界不同。", en: "Conflict Occurs → Find Misaligned Variables → Conflict Could Be Different Info, Needs, or Boundaries."},
+{num: 66, ch: "66｜爭論誰對→先確認共同目標→沒有共同Goal Function，討論容易失控。", en: "Argue Who's Right → Confirm Common Goal First → No Common Goal Function Means Discussion Spirals."},
+{num: 67, ch: "67｜想說服對方→先理解對方模型→不知道對方如何生成結論，就很難有效溝通。", en: "Want to Persuade → Understand Their Model First → Can't Communicate Well Without Understanding Their Logic."},
+{num: 68, ch: "68｜一直解釋自己→減少證明需求→真正的安全感不需要每次都贏。", en: "Keep Explaining Yourself → Reduce Proof Need → True Security Doesn't Need to Win Each Time."},
+{num: 69, ch: "69｜怕衝突→學習低摩擦表達→不衝突不等於關係健康。", en: "Fear Conflict → Learn Low-Friction Expression → No Conflict Doesn't Mean Healthy Relationship."},
+{num: 70, ch: "70｜一直忍耐→建立邊界→沒有邊界的和平通常只是延遲衝突。", en: "Tolerate Constantly → Establish Boundaries → Peacefulness Without Boundaries Often Just Delays Conflict."},
+{num: 71, ch: "71｜因為愛所以全答應→愛加上真理與邊界→幫忙不等於代替別人成長。", en: "Agree to Everything Because of Love → Love + Truth + Boundaries → Helping ≠ Replacing Someone's Growth."},
+{num: 72, ch: "72｜替孩子處理全部→改成陪他學會處理→真正的幫助會生成能力。", en: "Handle Everything for Child → Help Them Learn to Handle → True Help Generates Ability."},
+{num: 73, ch: "73｜一直擔心孩子→區分他的課題與我的課題→支持不等於接管。", en: "Worry About Child Constantly → Separate Their Task From Yours → Support ≠ Taking Over."},
+{num: 74, ch: "74｜希望別人改變→先修改互動結構→不能控制人，但可以改變自己的輸入。", en: "Hope Others Change → Modify Interaction Structure First → Can't Control People; Can Change Your Input."},
+{num: 75, ch: "75｜關係出問題就離開→先判斷可更新性→真正關鍵是系統還能不能修復。", en: "Relationship Problems? Leave → Judge Updatability First → Real Question: Can System Be Repaired?"},
+{num: 76, ch: "76｜關係痛苦就死撐→檢查邊界與安全→堅持不是所有關係的最高原則。", en: "Relationship Hurts? Endure It → Check Boundaries and Safety → Persistence Isn't Every Relationship's Highest Principle."},
+{num: 77, ch: "77｜朋友越多越好→提高關係品質→Network價值不只看節點數量。", en: "More Friends Is Better → Increase Relationship Quality → Network Value Isn't Just Node Count."},
+{num: 78, ch: "78｜一直社交→檢查使命連結→關係應該產生支持、成長、合作或愛。", en: "Socialize Constantly → Check Mission Connection → Relationships Should Create Support, Growth, or Love."},
+{num: 79, ch: "79｜想被所有人喜歡→接受不可避免的不匹配→高品質選擇必然包含放棄。", en: "Want Everyone to Like You → Accept Inevitable Mismatch → Quality Choices Always Include Letting Go."},
+{num: 80, ch: "80｜把孤單當失敗→建立內部穩定→能獨處的人，關係選擇反而更自由。", en: "Loneliness as Failure → Build Internal Stability → People Who Can Be Alone Have Freer Relationship Choices."},
+{num: 81, ch: "81｜考不好→做Error Analysis→分數是輸出，不是身份。", en: "Bad Test Score → Do Error Analysis → Score Is Output, Not Identity."},
+{num: 82, ch: "82｜單字不會→建立高頻弱點庫→不要每個單字平均用力。", en: "Vocabulary Gap → Build High-Frequency Weak Points Library → Don't Treat All Words Equally."},
+{num: 83, ch: "83｜一直重讀→改成主動提取→熟悉感不等於真的會。", en: "Constant Re-Reading → Switch to Active Retrieval → Recognition Isn't True Learning."},
+{num: 84, ch: "84｜讀很多沒進步→縮短Feedback Loop→學習需要快速知道自己錯在哪。", en: "Read Much; No Progress → Shorten Feedback Loop → Learning Needs Quick Error Recognition."},
+{num: 85, ch: "85｜害怕錯題→建立錯題資料庫→錯題是最個人化的教材。", en: "Fear Wrong Questions → Build Error Question Database → Wrong Questions Are Personalized Teaching Material."},
+{num: 86, ch: "86｜遇到難題就看答案→先形成自己的預測→沒有預測就很難產生真正Prediction Error。", en: "Difficult Question? Check Answer → Form Your Own Prediction First → Without Prediction, Can't Generate Real Error."},
+{num: 87, ch: "87｜只記答案→追問生成機制→智慧不是記得結果，而是理解為什麼。", en: "Only Remember Answer → Ask Why → Wisdom Isn't Remembering Results; It's Understanding Why."},
+{num: 88, ch: "88｜AI直接代做→讓AI當教練→AI最好的用途是放大思考，不是取消思考。", en: "AI Does It for You → Use AI as Coach → AI's Best Use Is Amplifying Thinking, Not Canceling It."},
+{num: 89, ch: "89｜AI給答案就相信→要求驗證與比較→AI是模型，不是本體真理。", en: "Believe AI Answer → Demand Verification and Comparison → AI Is Model, Not Absolute Truth."},
+{num: 90, ch: "90｜學很多課程→建立輸出場景→知識只有被使用才開始形成能力。", en: "Take Many Courses → Establish Output Scenarios → Knowledge Only Becomes Ability Through Use."},
+{num: 91, ch: "91｜收藏很多文章→每篇提取一個行動→資訊囤積也會增加認知熵。", en: "Collect Many Articles → Extract One Action Per Article → Information Hoarding Increases Cognitive Entropy."},
+{num: 92, ch: "92｜知道很多道理→找行為證據→真正內化會出現在下一次選擇裡。", en: "Know Many Principles → Find Behavioral Evidence → True Internalization Shows in Next Choice."},
+{num: 93, ch: "93｜只追求知識→升級成模型→知識回答『是什麼』，模型回答『怎麼運作』。", en: "Only Pursue Knowledge → Upgrade to Model → Knowledge Answers 'What'; Model Answers 'How.'"},
+{num: 94, ch: "94｜只解決眼前問題→尋找重複Pattern→不要一直救火，要找起火機制。", en: "Only Solve Immediate Problems → Find Repeated Pattern → Don't Just Fight Fires; Find What Starts Them."},
+{num: 95, ch: "95｜問題解決後就算了→建立Problem Prevention→每個問題都應留下系統升級。", en: "Problem Solved? Move On → Establish Problem Prevention → Every Problem Should Leave System Upgrade."},
+{num: 96, ch: "96｜一直改自己→也檢查環境→很多問題是Person×Environment共同生成。", en: "Always Change Yourself → Also Check Environment → Many Problems Are Person×Environment Co-Generated."},
+{num: 97, ch: "97｜遇到壓力就想消滅→把壓力當Stress Test→壓力會暴露系統真正的薄弱節點。", en: "Pressure Comes? Try to Eliminate → Use Pressure as Stress Test → Pressure Exposes True System Weak Points."},
+{num: 98, ch: "98｜人生卡住→檢查Hierarchy Error→可能不是不努力，而是權重放錯位置。", en: "Life Stuck → Check Hierarchy Error → Might Not Be Effort; Might Be Priorities in Wrong Place."},
+{num: 99, ch: "99｜不知道下一步→回到最高原則→先問什麼最重要，再問現在做什麼。", en: "Don't Know Next Step → Return to Highest Principle → Ask What Matters Most, Then What to Do Now."},
+{num: 100, ch: "100｜想找到永遠正確答案→建立自我更新系統→真正的智慧不是永遠不錯，而是錯了能快速更新。", en: "Want Perfect Forever Answers → Build Self-Updating System → True Wisdom Isn't Never Being Wrong; It's Fast Updates When Wrong."}
+];
+
+function renderItems() {
+  const container = document.getElementById('itemsContainer');
+  container.innerHTML = '';
+  
+  scriptData.forEach((item) => {
+    const card = document.createElement('div');
+    card.className = 'item-card';
+    card.innerHTML = `
+      <div class="item-header" onclick="toggleItem(this)">
+        <span class="item-num">[${item.num}]</span>
+        <span class="item-text">${item.ch.substring(0, 50)}...</span>
+        <span class="item-toggle">▼</span>
+      </div>
+      <div class="item-content">
+        <div class="lang-section">
+          <div class="lang-header">🇹🇼 繁体中文 Traditional Chinese</div>
+          <div class="lang-content">${item.ch}</div>
+        </div>
+        <div class="lang-section">
+          <div class="lang-header">🇺🇸 English</div>
+          <div class="lang-content">${item.en}</div>
+          <button class="tts-btn" onclick="speakText(this, '${item.en.replace(/'/g, "\\'")}')">🔊 Listen</button>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function toggleItem(header) {
+  header.classList.toggle('expanded');
+  header.nextElementSibling.classList.toggle('show');
+}
+
+function speakText(btn, text) {
+  if (window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
+    btn.classList.remove('playing');
+    return;
+  }
+  
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'en-US';
+  utterance.rate = 0.9;
+  utterance.pitch = 1.0;
+  
+  btn.classList.add('playing');
+  btn.textContent = '⏹ Stop';
+  
+  utterance.onend = () => {
+    btn.classList.remove('playing');
+    btn.textContent = '🔊 Listen';
+  };
+  
+  window.speechSynthesis.speak(utterance);
+}
+
+function filterItems() {
+  const query = document.getElementById('searchInput').value.toLowerCase();
+  const cards = document.querySelectorAll('.item-card');
+  
+  let count = 0;
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    if (text.includes(query)) {
+      card.style.display = 'block';
+      count++;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+  
+  if (query.length > 0) {
+    console.log(`Found ${count} items matching "${query}"`);
+  }
+}
+
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  filterItems();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderItems();
+  
+  // Add keyboard support
+  document.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && e.ctrlKey) {
+      const btn = event.target;
+      if (btn.classList.contains('tts-btn')) {
+        btn.click();
+      }
+    }
+  });
+});
+</script>
+
+</body>
+</html>

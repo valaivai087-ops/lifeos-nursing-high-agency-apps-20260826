@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>語言的八階段 - Language Eight Stages</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft JhengHei', 微軟正黑體, sans-serif;
+            background-color: #FFFFFF;
+            color: #1A2B5F;
+            line-height: 1.8;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1A2B5F 0%, #0A7A72 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            border-bottom: 3px solid #C9960C;
+            padding-bottom: 10px;
+        }
+        
+        .tab-btn {
+            background-color: #f0f0f0;
+            color: #1A2B5F;
+            border: 2px solid #1A2B5F;
+            padding: 10px 16px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn.active {
+            background-color: #C9960C;
+            color: white;
+            border-color: #C9960C;
+        }
+        
+        .tab-btn:hover {
+            background-color: #0A7A72;
+            color: white;
+            border-color: #0A7A72;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .stage-card {
+            background: white;
+            border-left: 6px solid #C9960C;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(26, 43, 95, 0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .stage-card:hover {
+            box-shadow: 0 4px 12px rgba(26, 43, 95, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .stage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .stage-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1A2B5F;
+            flex: 1;
+        }
+        
+        .stage-number {
+            background-color: #C9960C;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .expand-btn {
+            background-color: #0A7A72;
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .expand-btn:hover {
+            background-color: #1A2B5F;
+        }
+        
+        .expand-btn.open {
+            transform: rotate(180deg);
+        }
+        
+        .stage-content {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+        
+        .stage-content.open {
+            display: block;
+        }
+        
+        .bilingual-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .chinese-section, .english-section {
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 6px;
+        }
+        
+        .english-section {
+            background-color: #f0f8f8;
+        }
+        
+        .section-label {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #0A7A72;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        
+        .content-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #1A2B5F;
+            word-break: break-word;
+        }
+        
+        .tts-btn {
+            background-color: #C9960C;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 10px;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .tts-btn:hover {
+            background-color: #1A2B5F;
+        }
+        
+        .tts-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .key-point {
+            background-color: #FFF9E6;
+            border-left: 4px solid #C9960C;
+            padding: 12px 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .hierarchy-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .hierarchy-list li {
+            padding: 10px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 15px;
+        }
+        
+        .hierarchy-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #0A7A72;
+            font-weight: bold;
+        }
+        
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: white;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #1A2B5F;
+            color: white;
+            font-weight: bold;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .stage-formula {
+            background: linear-gradient(135deg, #f0f8f8 0%, #FFF9E6 100%);
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            text-align: center;
+            color: #1A2B5F;
+            font-size: 16px;
+            line-height: 2;
+        }
+        
+        .prediction-error {
+            background-color: #FFF9E6;
+            border: 2px solid #C9960C;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        .prediction-error strong {
+            color: #C9960C;
+        }
+        
+        .quote-section {
+            background: linear-gradient(135deg, #1A2B5F 0%, #0A7A72 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 6px;
+            margin: 30px 0;
+            font-size: 18px;
+            font-style: italic;
+            line-height: 2;
+            text-align: center;
+        }
+        
+        .bottleneck-section {
+            border: 2px solid #0A7A72;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #f0f8f8;
+            margin: 15px 0;
+        }
+        
+        .bottleneck-label {
+            color: #0A7A72;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .footnote {
+            font-size: 13px;
+            color: #666;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+        
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .highlight {
+            background-color: #FFF9E6;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        
+        @media (max-width: 768px) {
+            .bilingual-section, .grid-2col {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .tab-btn {
+                width: 100%;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>語言的八階段</h1>
+            <p>Language Eight Stages - From Victimhood to System Creation</p>
+        </div>
+        
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab(event, 'overview')">Overview 總覽</button>
+            <button class="tab-btn" onclick="switchTab(event, 'mindmap')">Mind Map 心智圖</button>
+            <button class="tab-btn" onclick="switchTab(event, 'stages')">8 Stages 八階段</button>
+            <button class="tab-btn" onclick="switchTab(event, 'table')">Master Table 總表</button>
+            <button class="tab-btn" onclick="switchTab(event, 'evolution')">Evolution 進化論</button>
+        </div>
+        
+        <!-- OVERVIEW TAB -->
+        <div id="overview" class="tab-content active">
+            <div class="quote-section">
+                語言真正的進化不是變得更正向。<br>
+                而是從「描述命運」進化到「讀取現實」。<br>
+                再從「讀取現實」進化到「更新模型」。<br>
+                最後從「更新模型」進化到「設計系統」。
+            </div>
+            
+            <div class="stage-card">
+                <div class="stage-header">
+                    <div>
+                        <div class="section-label">Core Framework</div>
+                        <div class="stage-title">從受害到創造的八層次升級</div>
+                    </div>
+                    <div class="expand-btn" onclick="toggleExpand(this)">▼</div>
+                </div>
+                <div class="stage-content open">
+                    <div class="bilingual-section">
+                        <div class="chinese-section">
+                            <div class="section-label">中文</div>
+                            <div class="content-text">
+                                <strong>第一層｜反應層</strong><br>受害語言<br>事件→命運<br><br>
+                                <strong>第二層｜資料層</strong><br>觀察語言<br>事件→資料<br><br>
+                                <strong>第三層｜規律層</strong><br>模式語言<br>資料→規律<br><br>
+                                <strong>第四層｜機制層</strong><br>結構語言<br>規律→機制<br><br>
+                                <strong>第五層｜控制層</strong><br>回饋語言<br>結果→誤差<br><br>
+                                <strong>第六層｜學習層</strong><br>更新語言<br>誤差→新模型<br><br>
+                                <strong>第七層｜自由層</strong><br>選擇語言<br>新模型→新選項<br><br>
+                                <strong>第八層｜創造層</strong><br>創造語言<br>新選項→新結構
+                            </div>
+                        </div>
+                        <div class="english-section">
+                            <div class="section-label">English</div>
+                            <div class="content-text">
+                                <strong>Level 1 | Reactive</strong><br>Victim Language<br>Event→Fate<br><br>
+                                <strong>Level 2 | Data</strong><br>Observation Language<br>Event→Data<br><br>
+                                <strong>Level 3 | Patterns</strong><br>Pattern Language<br>Data→Pattern<br><br>
+                                <strong>Level 4 | Mechanism</strong><br>Structure Language<br>Pattern→Mechanism<br><br>
+                                <strong>Level 5 | Control</strong><br>Feedback Language<br>Result→Error<br><br>
+                                <strong>Level 6 | Learning</strong><br>Update Language<br>Error→New Model<br><br>
+                                <strong>Level 7 | Freedom</strong><br>Choice Language<br>New Model→Options<br><br>
+                                <strong>Level 8 | Creation</strong><br>Creation Language<br>Options→System
+                            </div>
+                            <button class="tts-btn" onclick="speakText('Level 1 Reactive Layer Victim Language Event to Fate. Level 2 Data Layer Observation Language Event to Data. Level 3 Patterns Layer Pattern Language Data to Pattern. Level 4 Mechanism Layer Structure Language Pattern to Mechanism. Level 5 Control Layer Feedback Language Result to Error. Level 6 Learning Layer Update Language Error to New Model. Level 7 Freedom Layer Choice Language New Model to Options. Level 8 Creation Layer Creation Language Options to System.')">🔊 Speak All</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- MINDMAP TAB -->
+        <div id="mindmap" class="tab-content">
+            <div class="stage-card">
+                <div class="stage-header">
+                    <div>
+                        <div class="section-label">Complete Mind Map</div>
+                        <div class="stage-title">語言覺醒 - Language Awakening</div>
+                    </div>
+                    <div class="expand-btn" onclick="toggleExpand(this)">▼</div>
+                </div>
+                <div class="stage-content open">
+                    <div class="bilingual-section">
+                        <div class="chinese-section">
+                            <div class="section-label">中文</div>
+                            <div class="content-text">
+                                <strong>01 受害語言</strong><br>
+                                事件→解讀→歸因→情緒→無力<br>
+                                本質＝把事件變成命運<br>
+                                核心句＝「都是因為……」<br>
+                                瓶頸＝解讀<br>
+                                事實槓桿＝事件與人格分離<br>
+                                最小介入＝現在實際發生什麼？<br>
+                                Prediction Error＝如果真的完全無能，為什麼曾經有例外？<br><br>
+                                
+                                <strong>02 觀察語言</strong><br>
+                                事件→事實→描述→資料<br>
+                                本質＝把故事還原成可觀察事實<br>
+                                核心句＝「現在發生的是……」<br>
+                                瓶頸＝評價混入觀察<br>
+                                事實槓桿＝事實／解讀分離<br>
+                                最小介入＝攝影機拍得到嗎？<br>
+                                Prediction Error＝原本認為「總是如此」，紀錄後卻發現存在例外<br><br>
+                                
+                                <strong>03 模式語言</strong><br>
+                                資料→比較→重複→規律<br>
+                                本質＝從單一事件看見時間序列<br>
+                                核心句＝「什麼一直重複？」<br>
+                                瓶頸＝把相關當因果<br>
+                                事實槓桿＝頻率＋觸發條件＋例外<br>
+                                最小介入＝至少記錄三次<br>
+                                Prediction Error＝原以為隨機發生，結果發現集中在特定條件<br><br>
+                                
+                                <strong>04 結構語言</strong><br>
+                                模式→變數→關係→機制→Priority Node<br>
+                                本質＝找到結果背後的生成條件<br>
+                                核心句＝「什麼結構一直生成這個結果？」<br>
+                                瓶頸＝變數太多找不到關鍵節點<br>
+                                事實槓桿＝Priority Node<br>
+                                最小介入＝先改一個生成條件<br>
+                                Prediction Error＝改變一個關鍵條件後，結果明顯不同<br><br>
+                                
+                                <strong>05 回饋語言</strong><br>
+                                預測→行動→結果→比較→誤差<br>
+                                本質＝把結果從判決轉成資料<br>
+                                核心句＝「結果告訴我什麼？」<br>
+                                瓶頸＝把失敗人格化<br>
+                                事實槓桿＝Prediction Error<br>
+                                最小介入＝比較「原本預測／實際結果」<br>
+                                Prediction Error＝實際結果－預期結果<br><br>
+                                
+                                <strong>06 更新語言</strong><br>
+                                舊模型→誤差→新證據→修正→再測試<br>
+                                本質＝允許模型跟著現實改變<br>
+                                核心句＝「哪個假設需要更新？」<br>
+                                瓶頸＝保護舊信念<br>
+                                事實槓桿＝反例＋新證據<br>
+                                最小介入＝每天修改一個假設<br>
+                                Prediction Error＝新資料無法被舊模型解釋<br><br>
+                                
+                                <strong>07 選擇語言</strong><br>
+                                限制→資源→選項→成本→決策<br>
+                                本質＝在限制中增加自由度<br>
+                                核心句＝「我現在還能做什麼？」<br>
+                                瓶頸＝二元思考<br>
+                                事實槓桿＝增加有效選項<br>
+                                最小介入＝找出A／B以外的C<br>
+                                Prediction Error＝原以為沒有辦法，結果只是沒有生成更多選項<br><br>
+                                
+                                <strong>08 創造語言</strong><br>
+                                願景→目標→系統→實驗→回饋→迭代→湧現<br>
+                                本質＝重新設計生成結果的條件<br>
+                                核心句＝「我要建立什麼系統？」<br>
+                                瓶頸＝只有願望沒有迴路<br>
+                                事實槓桿＝系統設計<br>
+                                最小介入＝建立一個每天可重複的小迴路<br>
+                                Prediction Error＝原以為需要更多意志力，結果真正缺的是結構
+                            </div>
+                        </div>
+                        <div class="english-section">
+                            <div class="section-label">English</div>
+                            <div class="content-text">
+                                <strong>01 Victim Language</strong><br>
+                                Event→Interpretation→Attribution→Emotion→Powerlessness<br>
+                                Essence＝Turn event into fate<br>
+                                Core Phrase＝"It's all because..."<br>
+                                Bottleneck＝Interpretation<br>
+                                Leverage＝Separate event from personality<br>
+                                Minimum Intervention＝What's actually happening now?<br>
+                                PE＝If truly powerless, why have there been exceptions?<br><br>
+                                
+                                <strong>02 Observation Language</strong><br>
+                                Event→Fact→Description→Data<br>
+                                Essence＝Transform story into observable facts<br>
+                                Core Phrase＝"What's actually happening is..."<br>
+                                Bottleneck＝Judgment mixed into observation<br>
+                                Leverage＝Separate fact from interpretation<br>
+                                Minimum Intervention＝Can a camera record it?<br>
+                                PE＝Thought "always happens" but recording shows exceptions<br><br>
+                                
+                                <strong>03 Pattern Language</strong><br>
+                                Data→Comparison→Repetition→Pattern<br>
+                                Essence＝See time series from single events<br>
+                                Core Phrase＝"What keeps repeating?"<br>
+                                Bottleneck＝Confuse correlation with causation<br>
+                                Leverage＝Frequency + trigger + exceptions<br>
+                                Minimum Intervention＝Record at least three times<br>
+                                PE＝Thought random, discovered concentrated in specific conditions<br><br>
+                                
+                                <strong>04 Structure Language</strong><br>
+                                Pattern→Variables→Relationships→Mechanism→Priority Node<br>
+                                Essence＝Find generative conditions behind results<br>
+                                Core Phrase＝"What structure keeps generating this?"<br>
+                                Bottleneck＝Too many variables, can't find key node<br>
+                                Leverage＝Priority Node<br>
+                                Minimum Intervention＝Change one generative condition<br>
+                                PE＝Small change in key condition creates big difference<br><br>
+                                
+                                <strong>05 Feedback Language</strong><br>
+                                Prediction→Action→Result→Comparison→Error<br>
+                                Essence＝Turn result from verdict into data<br>
+                                Core Phrase＝"What does result tell me?"<br>
+                                Bottleneck＝Personalize failure<br>
+                                Leverage＝Prediction Error<br>
+                                Minimum Intervention＝Compare predicted vs actual<br>
+                                PE＝Actual Result - Expected Result<br><br>
+                                
+                                <strong>06 Update Language</strong><br>
+                                Old Model→Error→New Evidence→Correction→Retest<br>
+                                Essence＝Allow model to change with reality<br>
+                                Core Phrase＝"Which assumption needs updating?"<br>
+                                Bottleneck＝Protect old beliefs<br>
+                                Leverage＝Counterexample + new evidence<br>
+                                Minimum Intervention＝Update one assumption daily<br>
+                                PE＝New data can't be explained by old model<br><br>
+                                
+                                <strong>07 Choice Language</strong><br>
+                                Constraints→Resources→Options→Cost→Decision<br>
+                                Essence＝Increase freedom within constraints<br>
+                                Core Phrase＝"What else can I do now?"<br>
+                                Bottleneck＝Binary thinking<br>
+                                Leverage＝Generate more options<br>
+                                Minimum Intervention＝Find option C beyond A/B<br>
+                                PE＝Thought no way, just needed to generate more options<br><br>
+                                
+                                <strong>08 Creation Language</strong><br>
+                                Vision→Goal→System→Experiment→Feedback→Iteration→Emergence<br>
+                                Essence＝Redesign conditions generating results<br>
+                                Core Phrase＝"What system do I want to build?"<br>
+                                Bottleneck＝Wish without feedback loop<br>
+                                Leverage＝System design<br>
+                                Minimum Intervention＝Build small repeatable daily loop<br>
+                                PE＝Thought needed more willpower, actually needed structure
+                            </div>
+                            <button class="tts-btn" onclick="speakText('Stage 01 Victim Language. Event to Interpretation to Attribution to Emotion to Powerlessness. Essence: Turn event into fate. Core phrase: Its all because. Bottleneck: Interpretation. Leverage: Separate event from personality. Minimum Intervention: Whats actually happening now. Prediction Error: If truly powerless why have there been exceptions? Stage 02 Observation Language. Event to Fact to Description to Data. Essence: Transform story into observable facts. Core phrase: Whats actually happening is. Bottleneck: Judgment mixed into observation. Leverage: Separate fact from interpretation. Minimum Intervention: Can a camera record it. Prediction Error: Thought always happens but recording shows exceptions. Stage 03 Pattern Language. Data to Comparison to Repetition to Pattern. Essence: See time series from single events. Core phrase: What keeps repeating. Bottleneck: Confuse correlation with causation. Leverage: Frequency plus trigger plus exceptions. Minimum Intervention: Record at least three times. Prediction Error: Thought random, discovered concentrated in specific conditions. Stage 04 Structure Language. Pattern to Variables to Relationships to Mechanism to Priority Node. Essence: Find generative conditions behind results. Core phrase: What structure keeps generating this. Bottleneck: Too many variables, cant find key node. Leverage: Priority Node. Minimum Intervention: Change one generative condition. Prediction Error: Small change in key condition creates big difference. Stage 05 Feedback Language. Prediction to Action to Result to Comparison to Error. Essence: Turn result from verdict into data. Core phrase: What does result tell me. Bottleneck: Personalize failure. Leverage: Prediction Error. Minimum Intervention: Compare predicted versus actual. Prediction Error: Actual Result minus Expected Result. Stage 06 Update Language. Old Model to Error to New Evidence to Correction to Retest. Essence: Allow model to change with reality. Core phrase: Which assumption needs updating. Bottleneck: Protect old beliefs. Leverage: Counterexample plus new evidence. Minimum Intervention: Update one assumption daily. Prediction Error: New data cant be explained by old model. Stage 07 Choice Language. Constraints to Resources to Options to Cost to Decision. Essence: Increase freedom within constraints. Core phrase: What else can I do now. Bottleneck: Binary thinking. Leverage: Generate more options. Minimum Intervention: Find option C beyond A slash B. Prediction Error: Thought no way, just needed to generate more options. Stage 08 Creation Language. Vision to Goal to System to Experiment to Feedback to Iteration to Emergence. Essence: Redesign conditions generating results. Core phrase: What system do I want to build. Bottleneck: Wish without feedback loop. Leverage: System design. Minimum Intervention: Build small repeatable daily loop. Prediction Error: Thought needed more willpower, actually needed structure.')">🔊 Speak All</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- STAGES TAB -->
+        <div id="stages" class="tab-content">
+            <!-- Stage 1 -->
+            <div class="stage-card">
+                <div class="stage-header">
+                    <div class="stage-number">1</div>
+                    <div class="stage-title">受害語言 / Victim Language</div>
+                    <div class="expand-btn" onclick="toggleExpand(this)">▼</div>
+                </div>
+                <div class="stage-content">
+                    <div class="bilingual-section">
+                        <div class="chinese-section">
+                            <div class="section-label">本質 | Essence</div>
+                            <div class="content-text">把事件變成命運</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">核心句 | Core Phrase</div>
+                            <div class="key-point">「都是因為……」</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">機制 | Mechanism</div>
+                            <div class="content-text">
+                                事件→解讀→歸因→情緒→無力<br>
+                                快速因果化＋人格化
+                            </div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">瓶頸 | Bottleneck</div>
+                            <div class="bottleneck-section">
+                                <div class="bottleneck-label">把解讀當事實</div>
+                                <div class="content-text">
+                                    無法區分發生了什麼 vs 如何解讀它
+                                </div>
+                            </div>
+                        </div>
+                        <div class="english-section">
+                            <div class="section-label">本質 | Essence</div>
+                            <div class="content-text">Turn event into fate</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">核心句 | Core Phrase</div>
+                            <div class="key-point">"It's all because..."</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">機制 | Mechanism</div>
+                            <div class="content-text">
+                                Event→Interpretation→Attribution→Emotion→Powerlessness<br>
+                                Quick causation + personalization
+                            </div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">瓶頸 | Bottleneck</div>
+                            <div class="bottleneck-section">
+                                <div class="bottleneck-label">Confuse interpretation with fact</div>
+                                <div class="content-text">
+                                    Can't separate what happened from how it was interpreted
+                                </div>
+                            </div>
+                            
+                            <button class="tts-btn" onclick="speakText('Stage 1 Victim Language. Essence: Turn event into fate. Core phrase: Its all because. Mechanism: Event to Interpretation to Attribution to Emotion to Powerlessness. Quick causation plus personalization. Bottleneck: Confuse interpretation with fact. Cant separate what happened from how it was interpreted.')">🔊 Speak</button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <div class="section-label">槓桿 | Leverage</div>
+                        <div class="content-text">事件與人格分離</div>
+                        
+                        <div class="section-label" style="margin-top: 15px;">最小介入 | Minimum Intervention</div>
+                        <div class="key-point">現在實際發生什麼？</div>
+                        
+                        <div class="section-label" style="margin-top: 15px;">Prediction Error</div>
+                        <div class="prediction-error">
+                            如果真的完全無能，為什麼曾經有例外？
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stage 2 -->
+            <div class="stage-card">
+                <div class="stage-header">
+                    <div class="stage-number">2</div>
+                    <div class="stage-title">觀察語言 / Observation Language</div>
+                    <div class="expand-btn" onclick="toggleExpand(this)">▼</div>
+                </div>
+                <div class="stage-content">
+                    <div class="bilingual-section">
+                        <div class="chinese-section">
+                            <div class="section-label">本質 | Essence</div>
+                            <div class="content-text">把故事還原成可觀察事實</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">核心句 | Core Phrase</div>
+                            <div class="key-point">「現在發生的是……」</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">機制 | Mechanism</div>
+                            <div class="content-text">
+                                事實→描述→資料<br>
+                                降低推論與資訊污染
+                            </div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">瓶頸 | Bottleneck</div>
+                            <div class="bottleneck-section">
+                                <div class="bottleneck-label">評價混入觀察</div>
+                                <div class="content-text">
+                                    「他很自私」「我很爛」<br>
+                                    用判斷代替記錄
+                                </div>
+                            </div>
+                        </div>
+                        <div class="english-section">
+                            <div class="section-label">本質 | Essence</div>
+                            <div class="content-text">Transform story into observable facts</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">核心句 | Core Phrase</div>
+                            <div class="key-point">"What's actually happening is..."</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">機制 | Mechanism</div>
+                            <div class="content-text">
+                                Fact→Description→Data<br>
+                                Reduce inference and information contamination
+                            </div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">瓶頸 | Bottleneck</div>
+                            <div class="bottleneck-section">
+                                <div class="bottleneck-label">Judgment mixed into observation</div>
+                                <div class="content-text">
+                                    "He's selfish" "I'm bad"<br>
+                                    Use judgment instead of recording
+                                </div>
+                            </div>
+                            
+                            <button class="tts-btn" onclick="speakText('Stage 2 Observation Language. Essence: Transform story into observable facts. Core phrase: Whats actually happening is. Mechanism: Fact to Description to Data. Reduce inference and information contamination. Bottleneck: Judgment mixed into observation. Hes selfish, Im bad. Use judgment instead of recording.')">🔊 Speak</button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <div class="section-label">槓桿 | Leverage</div>
+                        <div class="content-text">事實／解讀分離</div>
+                        
+                        <div class="section-label" style="margin-top: 15px;">最小介入 | Minimum Intervention</div>
+                        <div class="key-point">攝影機拍得到嗎？</div>
+                        
+                        <div class="section-label" style="margin-top: 15px;">Prediction Error</div>
+                        <div class="prediction-error">
+                            原本認為「總是如此」，紀錄後卻發現存在例外
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stage 3 -->
+            <div class="stage-card">
+                <div class="stage-header">
+                    <div class="stage-number">3</div>
+                    <div class="stage-title">模式語言 / Pattern Language</div>
+                    <div class="expand-btn" onclick="toggleExpand(this)">▼</div>
+                </div>
+                <div class="stage-content">
+                    <div class="bilingual-section">
+                        <div class="chinese-section">
+                            <div class="section-label">本質 | Essence</div>
+                            <div class="content-text">從單一事件看見時間序列</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">核心句 | Core Phrase</div>
+                            <div class="key-point">「什麼一直重複？」</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">機制 | Mechanism</div>
+                            <div class="content-text">
+                                資料→比較→重複→規律<br>
+                                比較＋壓縮重複資訊
+                            </div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">瓶頸 | Bottleneck</div>
+                            <div class="bottleneck-section">
+                                <div class="bottleneck-label">把相關當因果</div>
+                                <div class="content-text">
+                                    問題反覆發生<br>
+                                    但不知道真正觸發的是什麼
+                                </div>
+                            </div>
+                        </div>
+                        <div class="english-section">
+                            <div class="section-label">本質 | Essence</div>
+                            <div class="content-text">See time series from single events</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">核心句 | Core Phrase</div>
+                            <div class="key-point">"What keeps repeating?"</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">機制 | Mechanism</div>
+                            <div class="content-text">
+                                Data→Comparison→Repetition→Pattern<br>
+                                Comparison + compress repeated information
+                            </div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">瓶頸 | Bottleneck</div>
+                            <div class="bottleneck-section">
+                                <div class="bottleneck-label">Confuse correlation with causation</div>
+                                <div class="content-text">
+                                    Problem repeats<br>
+                                    But don't know what truly triggers it
+                                </div>
+                            </div>
+                            
+                            <button class="tts-btn" onclick="speakText('Stage 3 Pattern Language. Essence: See time series from single events. Core phrase: What keeps repeating. Mechanism: Data to Comparison to Repetition to Pattern. Comparison plus compress repeated information. Bottleneck: Confuse correlation with causation. Problem repeats but dont know what truly triggers it.')">🔊 Speak</button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <div class="section-label">關鍵變數 | Key Variables</div>
+                        <div class="content-text">頻率／觸發／例外</div>
+                        
+                        <div class="section-label" style="margin-top: 15px;">最小介入 | Minimum Intervention</div>
+                        <div class="key-point">至少記錄三次</div>
+                        
+                        <div class="section-label" style="margin-top: 15px;">Prediction Error</div>
+                        <div class="prediction-error">
+                            原以為隨機發生，結果發現集中在特定條件
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stage 4 -->
+            <div class="stage-card">
+                <div class="stage-header">
+                    <div class="stage-number">4</div>
+                    <div class="stage-title">結構語言 / Structure Language</div>
+                    <div class="expand-btn" onclick="toggleExpand(this)">▼</div>
+                </div>
+                <div class="stage-content">
+                    <div class="bilingual-section">
+                        <div class="chinese-section">
+                            <div class="section-label">本質 | Essence</div>
+                            <div class="content-text">找到結果背後的生成條件</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">核心句 | Core Phrase</div>
+                            <div class="key-point">「什麼結構一直生成這個結果？」</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">機制 | Mechanism</div>
+                            <div class="content-text">
+                                模式→變數→關係→結構→機制→Priority Node<br>
+                                多變數耦合生成結果
+                            </div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">瓶頸 | Bottleneck</div>
+                            <div class="bottleneck-section">
+                                <div class="bottleneck-label">找不到Priority Node</div>
+                                <div class="content-text">
+                                    變數太多<br>
+                                    一直處理症狀
+                                </div>
+                            </div>
+                        </div>
+                        <div class="english-section">
+                            <div class="section-label">本質 | Essence</div>
+                            <div class="content-text">Find generative conditions behind results</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">核心句 | Core Phrase</div>
+                            <div class="key-point">"What structure keeps generating this?"</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">機制 | Mechanism</div>
+                            <div class="content-text">
+                                Pattern→Variables→Relationships→Structure→Mechanism→Priority Node<br>
+                                Multiple variables coupled generating results
+                            </div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">瓶頸 | Bottleneck</div>
+                            <div class="bottleneck-section">
+                                <div class="bottleneck-label">Can't find Priority Node</div>
+                                <div class="content-text">
+                                    Too many variables<br>
+                                    Keep treating symptoms
+                                </div>
+                            </div>
+                            
+                            <button class="tts-btn" onclick="speakText('Stage 4 Structure Language. Essence: Find generative conditions behind results. Core phrase: What structure keeps generating this. Mechanism: Pattern to Variables to Relationships to Structure to Mechanism to Priority Node. Multiple variables coupled generating results. Bottleneck: Cant find Priority Node. Too many variables. Keep treating symptoms.')">🔊 Speak</button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <div class="section-label">關鍵變數 | Key Variables</div>
+                        <div class="content-text">環境／誘因／摩擦／能力</div>
+                        
+                        <div class="section-label" style="margin-top: 15px;">最小介入 | Minimum Intervention</div>
+                        <div class="key-point">先改一個生成條件</div>
+                        
+                        <div class="section-label" style="margin-top: 15px;">Prediction Error</div>
+                        <div class="prediction-error">
+                            改變一個關鍵條件後，結果明顯不同
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stage 5 -->
+            <div class="stage-card">
+                <div class="stage-header">
+                    <div class="stage-number">5</div>
+                    <div class="stage-title">回饋語言 / Feedback Language</div>
+                    <div class="expand-btn" onclick="toggleExpand(this)">▼</div>
+                </div>
+                <div class="stage-content">
+                    <div class="bilingual-section">
+                        <div class="chinese-section">
+                            <div class="section-label">本質 | Essence</div>
+                            <div class="content-text">把結果從判決轉成資料</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">核心句 | Core Phrase</div>
+                            <div class="key-point">「結果告訴我什麼？」</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">機制 | Mechanism</div>
+                            <div class="content-text">
+                                預測→行動→結果→比較→誤差<br>
+                                控制迴路比較目標與現況
+                            </div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">瓶頸 | Bottleneck</div>
+                            <div class="bottleneck-section">
+                                <div class="bottleneck-label">把失敗人格化</div>
+                                <div class="content-text">
+                                    害怕錯誤<br>
+                                    逃避回饋
+                                </div>
+                            </div>
+                        </div>
+                        <div class="english-section">
+                            <div class="section-label">本質 | Essence</div>
+                            <div class="content-text">Turn result from verdict into data</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">核心句 | Core Phrase</div>
+                            <div class="key-point">"What does the result tell me?"</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">機制 | Mechanism</div>
+                            <div class="content-text">
+                                Prediction→Action→Result→Comparison→Error<br>
+                                Control loop comparing goal to current state
+                            </div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">瓶頸 | Bottleneck</div>
+                            <div class="bottleneck-section">
+                                <div class="bottleneck-label">Personalize failure</div>
+                                <div class="content-text">
+                                    Fear mistakes<br>
+                                    Avoid feedback
+                                </div>
+                            </div>
+                            
+                            <button class="tts-btn" onclick="speakText('Stage 5 Feedback Language. Essence: Turn result from verdict into data. Core phrase: What does the result tell me. Mechanism: Prediction to Action to Result to Comparison to Error. Control loop comparing goal to current state. Bottleneck: Personalize failure. Fear mistakes. Avoid feedback.')">🔊 Speak</button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <div class="section-label">關鍵變數 | Key Variables</div>
+                        <div class="content-text">目標／預測／結果／誤差</div>
+                        
+                        <div class="section-label" style="margin-top: 15px;">最小介入 | Minimum Intervention</div>
+                        <div class="key-point">比較「原本預測／實際結果」</div>
+                        
+                        <div class="section-label" style="margin-top: 15px;">Prediction Error 公式 | Formula</div>
+                        <div class="stage-formula">PE = Actual - Expected</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stage 6 -->
+            <div class="stage-card">
+                <div class="stage-header">
+                    <div class="stage-number">6</div>
+                    <div class="stage-title">更新語言 / Update Language</div>
+                    <div class="expand-btn" onclick="toggleExpand(this)">▼</div>
+                </div>
+                <div class="stage-content">
+                    <div class="bilingual-section">
+                        <div class="chinese-section">
+                            <div class="section-label">本質 | Essence</div>
+                            <div class="content-text">允許模型跟著現實改變</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">核心句 | Core Phrase</div>
+                            <div class="key-point">「哪個假設需要更新？」</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">機制 | Mechanism</div>
+                            <div class="content-text">
+                                舊模型→誤差→新證據→修正→再測試<br>
+                                模型根據誤差更新
+                            </div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">瓶頸 | Bottleneck</div>
+                            <div class="bottleneck-section">
+                                <div class="bottleneck-label">保護舊信念</div>
+                                <div class="content-text">
+                                    努力很多結果不變<br>
+                                    不願意改變假設
+                                </div>
+                            </div>
+                        </div>
+                        <div class="english-section">
+                            <div class="section-label">本質 | Essence</div>
+                            <div class="content-text">Allow model to change with reality</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">核心句 | Core Phrase</div>
+                            <div class="key-point">"Which assumption needs updating?"</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">機制 | Mechanism</div>
+                            <div class="content-text">
+                                Old Model→Error→New Evidence→Correction→Retest<br>
+                                Model updates based on error
+                            </div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">瓶頸 | Bottleneck</div>
+                            <div class="bottleneck-section">
+                                <div class="bottleneck-label">Protect old beliefs</div>
+                                <div class="content-text">
+                                    Effort doesn't change results<br>
+                                    Unwilling to update assumptions
+                                </div>
+                            </div>
+                            
+                            <button class="tts-btn" onclick="speakText('Stage 6 Update Language. Essence: Allow model to change with reality. Core phrase: Which assumption needs updating. Mechanism: Old Model to Error to New Evidence to Correction to Retest. Model updates based on error. Bottleneck: Protect old beliefs. Effort doesn\'t change results. Unwilling to update assumptions.')">🔊 Speak</button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <div class="section-label">關鍵變數 | Key Variables</div>
+                        <div class="content-text">假設／證據／反例／模型</div>
+                        
+                        <div class="section-label" style="margin-top: 15px;">最小介入 | Minimum Intervention</div>
+                        <div class="key-point">每天修改一個假設</div>
+                        
+                        <div class="section-label" style="margin-top: 15px;">Prediction Error</div>
+                        <div class="prediction-error">
+                            新資料無法被舊模型解釋
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stage 7 -->
+            <div class="stage-card">
+                <div class="stage-header">
+                    <div class="stage-number">7</div>
+                    <div class="stage-title">選擇語言 / Choice Language</div>
+                    <div class="expand-btn" onclick="toggleExpand(this)">▼</div>
+                </div>
+                <div class="stage-content">
+                    <div class="bilingual-section">
+                        <div class="chinese-section">
+                            <div class="section-label">本質 | Essence</div>
+                            <div class="content-text">在限制中增加自由度</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">核心句 | Core Phrase</div>
+                            <div class="key-point">「我現在還能做什麼？」</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">機制 | Mechanism</div>
+                            <div class="content-text">
+                                限制→資源→選項→成本→決策<br>
+                                生成並評估行動空間
+                            </div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">瓶頸 | Bottleneck</div>
+                            <div class="bottleneck-section">
+                                <div class="bottleneck-label">二元思考</div>
+                                <div class="content-text">
+                                    「我沒辦法」<br>
+                                    只看到A或B
+                                </div>
+                            </div>
+                        </div>
+                        <div class="english-section">
+                            <div class="section-label">本質 | Essence</div>
+                            <div class="content-text">Increase freedom within constraints</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">核心句 | Core Phrase</div>
+                            <div class="key-point">"What else can I do now?"</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">機制 | Mechanism</div>
+                            <div class="content-text">
+                                Constraints→Resources→Options→Cost→Decision<br>
+                                Generate and evaluate action space
+                            </div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">瓶頸 | Bottleneck</div>
+                            <div class="bottleneck-section">
+                                <div class="bottleneck-label">Binary thinking</div>
+                                <div class="content-text">
+                                    "I can't"<br>
+                                    Only see A or B
+                                </div>
+                            </div>
+                            
+                            <button class="tts-btn" onclick="speakText('Stage 7 Choice Language. Essence: Increase freedom within constraints. Core phrase: What else can I do now. Mechanism: Constraints to Resources to Options to Cost to Decision. Generate and evaluate action space. Bottleneck: Binary thinking. I cant. Only see A or B.')">🔊 Speak</button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <div class="section-label">關鍵變數 | Key Variables</div>
+                        <div class="content-text">資源／成本／風險／可逆性</div>
+                        
+                        <div class="section-label" style="margin-top: 15px;">最小介入 | Minimum Intervention</div>
+                        <div class="key-point">找出A／B以外的C</div>
+                        
+                        <div class="section-label" style="margin-top: 15px;">Prediction Error</div>
+                        <div class="prediction-error">
+                            原以為沒有辦法，結果只是沒有生成更多選項
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stage 8 -->
+            <div class="stage-card">
+                <div class="stage-header">
+                    <div class="stage-number">8</div>
+                    <div class="stage-title">創造語言 / Creation Language</div>
+                    <div class="expand-btn" onclick="toggleExpand(this)">▼</div>
+                </div>
+                <div class="stage-content">
+                    <div class="bilingual-section">
+                        <div class="chinese-section">
+                            <div class="section-label">本質 | Essence</div>
+                            <div class="content-text">重新設計生成結果的條件</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">核心句 | Core Phrase</div>
+                            <div class="key-point">「我要建立什麼系統？」</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">機制 | Mechanism</div>
+                            <div class="content-text">
+                                願景→目標→系統→實驗→回饋→迭代→湧現<br>
+                                重新配置生成條件
+                            </div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">瓶頸 | Bottleneck</div>
+                            <div class="bottleneck-section">
+                                <div class="bottleneck-label">只有願望沒有系統</div>
+                                <div class="content-text">
+                                    靠意志力反覆失敗<br>
+                                    缺少回饋迴路
+                                </div>
+                            </div>
+                        </div>
+                        <div class="english-section">
+                            <div class="section-label">本質 | Essence</div>
+                            <div class="content-text">Redesign conditions generating results</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">核心句 | Core Phrase</div>
+                            <div class="key-point">"What system do I want to build?"</div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">機制 | Mechanism</div>
+                            <div class="content-text">
+                                Vision→Goal→System→Experiment→Feedback→Iteration→Emergence<br>
+                                Reconfigure generative conditions
+                            </div>
+                            
+                            <div class="section-label" style="margin-top: 15px;">瓶頸 | Bottleneck</div>
+                            <div class="bottleneck-section">
+                                <div class="bottleneck-label">Wish without system</div>
+                                <div class="content-text">
+                                    Fail repeatedly on willpower<br>
+                                    Missing feedback loop
+                                </div>
+                            </div>
+                            
+                            <button class="tts-btn" onclick="speakText('Stage 8 Creation Language. Essence: Redesign conditions generating results. Core phrase: What system do I want to build. Mechanism: Vision to Goal to System to Experiment to Feedback to Iteration to Emergence. Reconfigure generative conditions. Bottleneck: Wish without system. Fail repeatedly on willpower. Missing feedback loop.')">🔊 Speak</button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <div class="section-label">關鍵變數 | Key Variables</div>
+                        <div class="content-text">目標／規則／環境／流程／回饋</div>
+                        
+                        <div class="section-label" style="margin-top: 15px;">最小介入 | Minimum Intervention</div>
+                        <div class="key-point">建立一個每天可重複的小迴路</div>
+                        
+                        <div class="section-label" style="margin-top: 15px;">Prediction Error 公式 | Formula</div>
+                        <div class="stage-formula">結果 = 系統長期輸出<br>Result = System's Long-term Output</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TABLE TAB -->
+        <div id="table" class="tab-content">
+            <div class="stage-card">
+                <div class="stage-header">
+                    <div>
+                        <div class="section-label">Complete Master Table</div>
+                        <div class="stage-title">語言八階段總覽表</div>
+                    </div>
+                    <div class="expand-btn" onclick="toggleExpand(this)">▼</div>
+                </div>
+                <div class="stage-content open">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>階段<br>Stage</th>
+                                    <th>本質<br>Essence</th>
+                                    <th>規律/結構<br>Pattern/Structure</th>
+                                    <th>生成機制<br>Generative Mechanism</th>
+                                    <th>核心節點<br>Core Node</th>
+                                    <th>主要瓶頸<br>Main Bottleneck</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>①受害</strong><br>Victim</td>
+                                    <td>事件變命運<br>Event→Fate</td>
+                                    <td>事件→解讀→歸因→情緒<br>Event→Interpret→Attribute→Emotion</td>
+                                    <td>快速因果化＋人格化<br>Quick causation + personalization</td>
+                                    <td>事件/歸因/身分<br>Event/Attribution/Identity</td>
+                                    <td>把解讀當事實<br>Confuse interpretation with fact</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>②觀察</strong><br>Observation</td>
+                                    <td>事件變資料<br>Event→Data</td>
+                                    <td>事實→描述→資料<br>Fact→Description→Data</td>
+                                    <td>降低推論與汙染<br>Reduce inference & contamination</td>
+                                    <td>人物/行為/時間/數量<br>Person/Action/Time/Quantity</td>
+                                    <td>評價混入觀察<br>Judgment in observation</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>③模式</strong><br>Pattern</td>
+                                    <td>資料變規律<br>Data→Pattern</td>
+                                    <td>多次事件→序列→Pattern<br>Multiple events→Sequence→Pattern</td>
+                                    <td>比較＋壓縮資訊<br>Comparison + compress info</td>
+                                    <td>頻率/觸發/例外<br>Frequency/Trigger/Exception</td>
+                                    <td>相關誤認因果<br>Confuse correlation with causation</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>④結構</strong><br>Structure</td>
+                                    <td>規律變機制<br>Pattern→Mechanism</td>
+                                    <td>變數→關係→結構→機制<br>Variables→Relationships→Structure→Mechanism</td>
+                                    <td>多變數耦合<br>Multiple variable coupling</td>
+                                    <td>環境/誘因/摩擦/能力<br>Environment/Incentive/Friction/Ability</td>
+                                    <td>找不到Priority Node<br>Can't find Priority Node</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>⑤回饋</strong><br>Feedback</td>
+                                    <td>結果變資料<br>Result→Data</td>
+                                    <td>預測→行動→結果→誤差<br>Prediction→Action→Result→Error</td>
+                                    <td>控制迴路比較<br>Control loop comparison</td>
+                                    <td>目標/預測/結果/誤差<br>Goal/Prediction/Result/Error</td>
+                                    <td>失敗人格化<br>Personalize failure</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>⑥更新</strong><br>Update</td>
+                                    <td>誤差變學習<br>Error→Learning</td>
+                                    <td>舊模型→證據→修正→再測<br>Old Model→Evidence→Correct→Retest</td>
+                                    <td>模型根據誤差更新<br>Model updates on error</td>
+                                    <td>假設/證據/反例/模型<br>Assumption/Evidence/Counterexample/Model</td>
+                                    <td>保護舊信念<br>Protect old beliefs</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>⑦選擇</strong><br>Choice</td>
+                                    <td>模型變自由<br>Model→Freedom</td>
+                                    <td>限制→選項→比較→決策<br>Constraints→Options→Compare→Decide</td>
+                                    <td>生成評估行動<br>Generate & evaluate actions</td>
+                                    <td>資源/成本/風險/可逆<br>Resource/Cost/Risk/Reversible</td>
+                                    <td>二元思考<br>Binary thinking</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>⑧創造</strong><br>Creation</td>
+                                    <td>選項變系統<br>Options→System</td>
+                                    <td>願景→設計→實驗→回饋→迭代<br>Vision→Design→Experiment→Feedback→Iterate</td>
+                                    <td>重新配置條件<br>Reconfigure conditions</td>
+                                    <td>目標/規則/環境/流程/回饋<br>Goal/Rules/Environment/Process/Feedback</td>
+                                    <td>只有願望沒系統<br>Wish without system</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>階段 Stage</th>
+                                        <th>典型問題/現象<br>Typical Problem</th>
+                                        <th>最大槓桿<br>Max Leverage</th>
+                                        <th>最小介入<br>Min Intervention</th>
+                                        <th>Prediction Error</th>
+                                        <th>核心公式<br>Core Formula</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>①受害 Victim</td>
+                                        <td>抱怨、無力、責怪</td>
+                                        <td>事件與人格分離</td>
+                                        <td>現在實際發生什麼？</td>
+                                        <td>發現存在反例</td>
+                                        <td>事件≠人格</td>
+                                    </tr>
+                                    <tr>
+                                        <td>②觀察 Observe</td>
+                                        <td>「他很自私」「我很爛」</td>
+                                        <td>事實/解讀分離</td>
+                                        <td>攝影機拍得到嗎？</td>
+                                        <td>紀錄與原印象不同</td>
+                                        <td>事實≠解讀</td>
+                                    </tr>
+                                    <tr>
+                                        <td>③模式 Pattern</td>
+                                        <td>問題反覆發生</td>
+                                        <td>時間序列</td>
+                                        <td>記錄三次</td>
+                                        <td>發現真正觸發條件</td>
+                                        <td>事件×時間→模式</td>
+                                    </tr>
+                                    <tr>
+                                        <td>④結構 Structure</td>
+                                        <td>一直處理症狀</td>
+                                        <td>找到關鍵節點</td>
+                                        <td>改一個生成條件</td>
+                                        <td>小改變造成大差異</td>
+                                        <td>結構→行為→結果</td>
+                                    </tr>
+                                    <tr>
+                                        <td>⑤回饋 Feedback</td>
+                                        <td>害怕錯誤、逃避回饋</td>
+                                        <td>Prediction Error</td>
+                                        <td>比較預測與實際</td>
+                                        <td>實際≠預期</td>
+                                        <td>PE = Actual - Expected</td>
+                                    </tr>
+                                    <tr>
+                                        <td>⑥更新 Update</td>
+                                        <td>努力很多結果不變</td>
+                                        <td>修改模型</td>
+                                        <td>更新一個假設</td>
+                                        <td>舊模型無法解釋新資料</td>
+                                        <td>誤差→更新→新模型</td>
+                                    </tr>
+                                    <tr>
+                                        <td>⑦選擇 Choice</td>
+                                        <td>「我沒辦法」</td>
+                                        <td>增加選項</td>
+                                        <td>找到C方案</td>
+                                        <td>發現選項不足而非無路</td>
+                                        <td>自由度 ≈ 選項×可執行性</td>
+                                    </tr>
+                                    <tr>
+                                        <td>⑧創造 Create</td>
+                                        <td>靠意志力反覆失敗</td>
+                                        <td>系統設計</td>
+                                        <td>建立每日最小迴路</td>
+                                        <td>缺的是結構不是意志</td>
+                                        <td>結果 = 系統長期輸出</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- EVOLUTION TAB -->
+        <div id="evolution" class="tab-content">
+            <div class="stage-card">
+                <div class="stage-header">
+                    <div>
+                        <div class="section-label">Language Evolution Model</div>
+                        <div class="stage-title">語言進化 - 從描述命運到設計系統</div>
+                    </div>
+                    <div class="expand-btn" onclick="toggleExpand(this)">▼</div>
+                </div>
+                <div class="stage-content open">
+                    <div class="bilingual-section">
+                        <div class="chinese-section">
+                            <div class="section-label">每一階段只記一個問題</div>
+                            <div class="content-text">
+                                <strong>受害語言</strong><br>
+                                「為什麼都是我？」<br><br>
+                                
+                                <strong>觀察語言</strong><br>
+                                「實際發生什麼？」<br><br>
+                                
+                                <strong>模式語言</strong><br>
+                                「什麼一直重複？」<br><br>
+                                
+                                <strong>結構語言</strong><br>
+                                「什麼正在生成它？」<br><br>
+                                
+                                <strong>回饋語言</strong><br>
+                                「結果和預測差在哪？」<br><br>
+                                
+                                <strong>更新語言</strong><br>
+                                「哪個假設需要修改？」<br><br>
+                                
+                                <strong>選擇語言</strong><br>
+                                「現在還有哪些選項？」<br><br>
+                                
+                                <strong>創造語言</strong><br>
+                                「我要建立什麼系統？」
+                            </div>
+                        </div>
+                        <div class="english-section">
+                            <div class="section-label">One Question Per Stage</div>
+                            <div class="content-text">
+                                <strong>Victim Language</strong><br>
+                                "Why is it always me?"<br><br>
+                                
+                                <strong>Observation Language</strong><br>
+                                "What's actually happening?"<br><br>
+                                
+                                <strong>Pattern Language</strong><br>
+                                "What keeps repeating?"<br><br>
+                                
+                                <strong>Structure Language</strong><br>
+                                "What structure generates this?"<br><br>
+                                
+                                <strong>Feedback Language</strong><br>
+                                "Where does result differ from prediction?"<br><br>
+                                
+                                <strong>Update Language</strong><br>
+                                "Which assumption needs updating?"<br><br>
+                                
+                                <strong>Choice Language</strong><br>
+                                "What other options do I have?"<br><br>
+                                
+                                <strong>Creation Language</strong><br>
+                                "What system do I want to build?"
+                            </div>
+                            <button class="tts-btn" onclick="speakText('Victim Language: Why is it always me? Observation Language: Whats actually happening? Pattern Language: What keeps repeating? Structure Language: What structure generates this? Feedback Language: Where does result differ from prediction? Update Language: Which assumption needs updating? Choice Language: What other options do I have? Creation Language: What system do I want to build?')">🔊 Speak</button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <div class="bilingual-section">
+                            <div class="chinese-section">
+                                <div class="section-label">最短記憶口訣</div>
+                                <div class="content-text">
+                                    <strong>受害</strong>＝怪。<br>
+                                    <strong>觀察</strong>＝看。<br>
+                                    <strong>模式</strong>＝找。<br>
+                                    <strong>結構</strong>＝拆。<br>
+                                    <strong>回饋</strong>＝比。<br>
+                                    <strong>更新</strong>＝改。<br>
+                                    <strong>選擇</strong>＝選。<br>
+                                    <strong>創造</strong>＝建。<br><br>
+                                    
+                                    <strong>口訣</strong>：怪→看→找→拆→比→改→選→建
+                                </div>
+                            </div>
+                            <div class="english-section">
+                                <div class="section-label">Shortest Memory Mnemonic</div>
+                                <div class="content-text">
+                                    <strong>Victim</strong> = Blame<br>
+                                    <strong>Observation</strong> = Observe<br>
+                                    <strong>Pattern</strong> = Find<br>
+                                    <strong>Structure</strong> = Deconstruct<br>
+                                    <strong>Feedback</strong> = Compare<br>
+                                    <strong>Update</strong> = Change<br>
+                                    <strong>Choice</strong> = Choose<br>
+                                    <strong>Creation</strong> = Build<br><br>
+                                    
+                                    <strong>Mnemonic</strong>: Blame→Observe→Find→Deconstruct→Compare→Change→Choose→Build
+                                </div>
+                                <button class="tts-btn" onclick="speakText('Victim equals Blame. Observation equals Observe. Pattern equals Find. Structure equals Deconstruct. Feedback equals Compare. Update equals Change. Choice equals Choose. Creation equals Build. Mnemonic: Blame, Observe, Find, Deconstruct, Compare, Change, Choose, Build.')">🔊 Speak</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <div class="section-label">高階語言 - 問題進化</div>
+                        <div style="background: linear-gradient(135deg, #f0f8f8 0%, #FFF9E6 100%); padding: 25px; border-radius: 8px; margin: 15px 0;">
+                            <div class="content-text" style="font-size: 15px; line-height: 2.2;">
+                                <strong style="color: #1A2B5F;">低階語言問：</strong><br>
+                                「誰害我變成這樣？」<br><br>
+                                
+                                <strong style="color: #1A2B5F;">中階語言問：</strong><br>
+                                「這件事為什麼一直發生？」<br><br>
+                                
+                                <strong style="color: #1A2B5F;">高階語言問：</strong><br>
+                                「哪個機制正在生成它？」<br><br>
+                                
+                                <strong style="color: #1A2B5F;">更高階語言問：</strong><br>
+                                「結果正在修正我哪個模型？」<br><br>
+                                
+                                <strong style="color: #1A2B5F;">最高階語言問：</strong><br>
+                                「我要改哪個最小節點，讓整個系統開始生成不同結果？」
+                            </div>
+                        </div>
+                        
+                        <button class="tts-btn" onclick="speakText('Lower level language asks: Who caused this to happen to me? Mid-level language asks: Why does this keep happening? Higher level language asks: What mechanism is generating this? Even higher language asks: What model is the result correcting in me? Highest language asks: What single node should I change so the entire system generates different results?')" style="margin-top: 15px;">🔊 Speak Higher Levels</button>
+                    </div>
+                    
+                    <div class="quote-section" style="margin-top: 30px;">
+                        語言真正的進化不是變得更正向。<br><br>
+                        而是從「描述命運」進化到「讀取現實」。<br><br>
+                        再從「讀取現實」進化到「更新模型」。<br><br>
+                        最後從「更新模型」進化到「設計系統」。
+                    </div>
+                    
+                    <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-top: 20px;">
+                        <div class="section-label">系統自我更新迴路 | Self-Updating System Loop</div>
+                        <div class="content-text" style="font-size: 16px; line-height: 2.2; text-align: center;">
+                            <strong>現實</strong><br>
+                            ↓<br>
+                            <strong>觀察</strong> → <strong>資料</strong><br>
+                            ↓<br>
+                            <strong>模式</strong> → <strong>結構</strong> → <strong>機制</strong><br>
+                            ↓<br>
+                            <strong>預測</strong> → <strong>行動</strong> → <strong>結果</strong><br>
+                            ↓<br>
+                            <strong>Prediction Error</strong> → <strong>回饋</strong><br>
+                            ↓<br>
+                            <strong>模型更新</strong><br>
+                            ↓<br>
+                            <strong>增加選項</strong> → <strong>重新設計</strong><br>
+                            ↓<br>
+                            <strong>新結構</strong> → <strong>新行為</strong> → <strong>新回饋</strong> → <strong>新結果</strong><br>
+                            ↓<br>
+                            <strong>↺ Self-Updating System Loop</strong>
+                        </div>
+                        <button class="tts-btn" onclick="speakText('Reality, Observation, Data, Pattern, Structure, Mechanism, Prediction, Action, Result, Prediction Error, Feedback, Model Update, More Options, Redesign, New Structure, New Behavior, New Feedback, New Result, Self-Updating System Loop. This cycle repeats and evolves continuously.')" style="margin-top: 15px;">🔊 Speak Loop</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function switchTab(event, tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+        
+        function toggleExpand(button) {
+            const card = button.closest('.stage-card');
+            const content = card.querySelector('.stage-content');
+            
+            button.classList.toggle('open');
+            content.classList.toggle('open');
+        }
+        
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.85;
+                speechSynthesis.speak(utterance);
+            }
+        }
+    </script>
+</body>
+</html>
