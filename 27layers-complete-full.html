@@ -131,6 +131,53 @@ th{background:var(--surface2);font-weight:600}
 .core-list .f{white-space:pre-line;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;font-weight:600;line-height:1.9;margin-bottom:10px}
 .core-list blockquote{margin:0 0 12px;padding:10px 14px;border-left:3px solid var(--gold);background:var(--surface);border-radius:0 10px 10px 0}
 .core-list .en{display:block;margin-top:4px;font-weight:400;font-size:13.5px}
+/* soul structure test */
+.qz{max-width:680px;margin:0 auto 14px}
+.qz h2{margin:6px 0 10px;font-size:23px}
+.qz-kicker{font-size:13px;color:var(--accent);font-weight:600}
+.qz-points{margin:10px 0;padding-left:20px}
+.qz-points li{margin:4px 0}
+.qz-fine{font-size:12.5px;color:var(--ink3);margin-top:14px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600;padding:9px 18px;font-size:14px}
+:root[data-theme="dark"] .btn.primary{color:#10151c}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.primary{color:#10151c}}
+.qz-prog{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink3);margin-bottom:14px}
+.qz-bar{flex:1;height:6px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.qz-bar div{height:100%;background:var(--accent);transition:width .25s}
+.qz-q{font-size:20px;line-height:1.55;margin:10px 0 6px}
+.qz-q .en{font-size:14px;font-weight:400;margin-top:4px}
+.qz-ex{font-size:13px;color:var(--ink3);margin-bottom:14px}
+.qz-opts{display:grid;gap:8px}
+.qz-opt{display:flex;align-items:center;gap:10px;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:12px 14px;font-size:15px;transition:border-color .15s,background .15s}
+.qz-opt:hover{border-color:var(--accent)}
+.qz-opt.on{border-color:var(--accent);background:var(--accent-soft);font-weight:600}
+.dot{width:12px;height:12px;border-radius:50%;flex:none}
+.d0{background:var(--lo)} .d1{background:color-mix(in srgb,var(--lo) 55%,var(--gold))} .d2{background:var(--gold)} .d3{background:color-mix(in srgb,var(--gold) 45%,var(--hi))} .d4{background:var(--hi)}
+.qz-score{display:flex;align-items:center;gap:16px;margin:10px 0 6px}
+.qz-num{font-size:54px;font-weight:800;line-height:1}
+.qz-lv{font-size:20px;font-weight:700}
+.lo{color:var(--lo)} .mid{color:var(--gold)} .hi{color:var(--hi)}
+.qz-gauge{position:relative;height:10px;border-radius:99px;margin:10px 0 14px;background:linear-gradient(90deg,var(--lo),var(--gold) 45%,var(--hi))}
+.qz-gauge div{position:absolute;top:-4px;width:4px;height:18px;margin-left:-2px;background:var(--ink);border-radius:2px}
+.qz-care{max-width:680px;margin:0 auto 14px;background:var(--hi-soft);border-color:transparent}
+.qz-h{max-width:680px;margin:22px auto 10px;font-size:17px}
+.qz-res + .qz-h, .qz-h + .card, .qz-h + .list{max-width:680px;margin-left:auto;margin-right:auto}
+.qz-h ~ .list, .qz-h ~ .card, .qz-h ~ .btnrow, .qz-h ~ .qz-fine{max-width:680px;margin-left:auto;margin-right:auto}
+.qz-zone{padding:6px 0}
+.qz-zone + .qz-zone{border-top:1px dashed var(--line)}
+.qz-zn{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.qz-p{font-size:13px;color:var(--ink2);width:28px;text-align:right}
+.fill.lo{background:var(--lo)} .fill.mid{background:var(--gold)} .fill.hi{background:var(--hi)}
+.qz-top h4{margin:4px 0;font-size:16px}
+.hi-t{color:var(--hi)}
+.qz-strat{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.qz-all{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+.qz-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.qz-pill{font-size:12px;border-radius:99px;padding:1px 9px;white-space:nowrap}
+.qz-pill.v0,.qz-pill.v1{background:var(--lo-soft);color:var(--lo)}
+.qz-pill.v2{background:var(--surface2);color:var(--gold)}
+.qz-pill.v3,.qz-pill.v4{background:var(--hi-soft);color:var(--hi)}
+@media (max-width:560px){ .qz-all{grid-template-columns:1fr} .qz-num{font-size:44px} .qz-q{font-size:18px} }
 footer{color:var(--ink3);font-size:12px;text-align:center;padding:10px 0 30px}
 @media (max-width:560px){
   header h1{font-size:22px}
@@ -168,7 +215,9 @@ const store = {
 };
 const S = {
   mode: store.get('mode', EDITION === 'en' ? 'bi' : 'zh'),
-  tab: store.get('tab', 'diag'),
+  tab: store.get('tab2', 'quiz'),
+  quiz: store.get('quiz', {step:-1, ans:[]}),
+  last: store.get('quizLast', null),
   q: '', group: -1, part: 0, libShown: 20,
   checks: store.get('checks', {}),
   open: {}
@@ -176,8 +225,8 @@ const S = {
 
 const UI = {
   zh: {h1: EDITION==='en' ? '27層母體結構｜英文翻譯版' : '27層母體結構｜完整版',
-       sub: EDITION==='en' ? '27-Layer Matrix Structure · 中英對照：27層診斷、26大生成結構、核心公式' : '27層診斷 × 26大生成結構 × 全文庫 × 核心公式',
-       ph:'搜尋：例如 焦慮、身份、預測、拖延…', tabs:{diag:'🩺 27層診斷', st:'🧬 26大結構', lib:'📚 全文庫', core:'🔥 核心公式'},
+       sub: EDITION==='en' ? '27-Layer Matrix Structure · 中英對照：靈魂結構測驗、27層診斷、26大生成結構、核心公式' : '靈魂結構測驗 × 27層診斷 × 26大生成結構 × 全文庫 × 核心公式',
+       ph:'搜尋：例如 焦慮、身份、預測、拖延…', tabs:{quiz:'🧭 靈魂結構測驗', diag:'🩺 27層勾選表', st:'🧬 26大結構', lib:'📚 全文庫', core:'🔥 核心公式'},
        modes:{zh:'中文', bi:'中英', en:'EN'},
        diagIntro:'勾選符合你最近狀態的描述。勾得越多，代表這一層越「高熵」（越混亂、越耗能），是優先更新的地方。',
        top3:'你目前最需要更新的層', none:'還沒有勾選。先從直覺最有感的那幾題開始。', checked:'已勾選', reset:'清除全部勾選', related:'看相關內容 →',
@@ -188,8 +237,8 @@ const UI = {
        libIntro:'原始完整內容，已去除重複與分隔線，依篇章分類。長段落可以展開。',
        expand:'展開全文', collapse:'收合', loadMore:'載入更多', found:'筆', noResult:'找不到符合的內容，換個關鍵字試試。',
        libNote:'', foot:'LifeOS · 27層母體結構'},
-  en: {h1:'27-Layer Matrix Structure', sub:'English edition · 27-layer diagnosis, 26 generative structures, core formulas',
-       ph:'Search: e.g. anxiety, identity, prediction…', tabs:{diag:'🩺 Diagnosis', st:'🧬 26 Structures', lib:'📚 Library (中文)', core:'🔥 Core Formulas'},
+  en: {h1:'27-Layer Matrix Structure', sub:'English edition · soul structure test, 27-layer diagnosis, 26 generative structures, core formulas',
+       ph:'Search: e.g. anxiety, identity, prediction…', tabs:{quiz:'🧭 Soul Structure Test', diag:'🩺 Checklist', st:'🧬 26 Structures', lib:'📚 Library (中文)', core:'🔥 Core Formulas'},
        modes:{zh:'中文', bi:'中英', en:'EN'},
        diagIntro:'Tick every statement that fits you lately. The more ticks, the more "high-entropy" (chaotic, draining) that layer is — and the higher its priority for updating.',
        top3:'Layers that most need updating', none:'Nothing ticked yet. Start with the statements that feel most familiar.', checked:'Ticked', reset:'Clear all', related:'Related content →',
@@ -239,7 +288,174 @@ function renderChrome(){
     lib: D.library.filter(c => match(libText(c))).length,
     core: D.guide.filter(g => g.k !== 'h' && match(coreText(g))).length } : null;
   document.getElementById('tabs').innerHTML = Object.entries(T().tabs).map(([k,v]) =>
-    `<button data-t="${k}" class="${S.tab===k?'on':''}">${v}${counts?`<span class="cnt">${counts[k]}</span>`:''}</button>`).join('');
+    `<button data-t="${k}" class="${S.tab===k?'on':''}">${v}${counts && counts[k]!=null?`<span class="cnt">${counts[k]}</span>`:''}</button>`).join('');
+}
+
+// ---------- soul structure test ----------
+// [layer n, zh statement, en statement, related structure n (1-26)]
+const QZ = [
+ [1,'我覺得自己的價值，要靠角色、表現或別人的肯定來證明。','I feel my worth has to be proven through roles, performance or other people\'s approval.',9],
+ [2,'我容易覺得別人在針對我，或第一眼先看到負面的地方。','I tend to feel others are targeting me, or I notice the negative first.',1],
+ [3,'我的注意力很容易被手機、情緒或雜事帶走，很難專注。','My attention is easily pulled away by my phone, emotions or small tasks, and it\'s hard to focus.',2],
+ [4,'事情不順時，我會怪自己，覺得是自己很爛。','When things go wrong, I blame myself and think I\'m just bad.',4],
+ [5,'我容易焦慮、暴怒或低落，情緒會一直重播。','I easily get anxious, angry or low, and my emotions keep replaying.',14],
+ [6,'我不太清楚人生真正想要什麼，常追求短期的舒服。','I\'m not sure what I really want in life, and I often chase short-term comfort.',12],
+ [7,'我常預想最壞的結果，擔心未來、害怕犯錯。','I often expect the worst, worry about the future and fear making mistakes.',5],
+ [8,'我心裡覺得自己不太可能成功，或覺得自己改不了。','Deep down I believe I\'m unlikely to succeed, or that I can\'t change.',7],
+ [9,'我常活成別人期待的樣子，不敢做真正的自己。','I often live up to others\' expectations and don\'t dare to be my true self.',6],
+ [10,'我很在意別人的看法，容易比較、羨慕別人。','I care a lot about what others think, and I easily compare myself and envy others.',10],
+ [11,'在關係裡，我害怕被丟下，會過度討好或反覆受傷。','In relationships I fear being abandoned, over-please others, or keep getting hurt.',24],
+ [12,'我很容易累，恢復很慢，常覺得被掏空。','I tire easily, recover slowly and often feel drained.',18],
+ [13,'我想很多卻遲遲不行動，容易拖延或三分鐘熱度。','I think a lot but don\'t act; I procrastinate or lose steam quickly.',19],
+ [14,'熬夜、滑手機、暴食這類壞習慣，我很難停下來。','I find it hard to stop bad habits like staying up late, scrolling or binge eating.',23],
+ [15,'被提醒或批評時，我容易玻璃心、逃避，或重複同樣的錯。','When corrected or criticized, I get hurt easily, avoid it, or repeat the same mistakes.',20],
+ [16,'我希望立刻看到效果，很難耐心累積，常半途而廢。','I want instant results, struggle to build things patiently and often quit halfway.',10],
+ [17,'我習慣用舊方法，不太願意學新東西或改變。','I stick to old methods and am reluctant to learn new things or change.',22],
+ [18,'我常衝動做決定或猶豫不決，事後後悔。','I often decide on impulse or can\'t decide at all, and regret it later.',21],
+ [19,'我身邊的人事物讓我常被消耗，缺乏支持。','The people and things around me often drain me, and I lack support.',25],
+ [20,'我常對自己說「我不行」，習慣抱怨或說話很絕對。','I often tell myself "I can\'t", complain out of habit, or speak in absolutes.',11],
+ [21,'同樣的問題在我生活裡反覆出現，換了方法也沒用。','The same problems keep coming back in my life, even when I try new methods.',3],
+ [22,'工作、健康、感情只要一個亂掉，其他也會跟著亂。','When one area — work, health or love — falls apart, the others follow.',8],
+ [23,'我的生活、空間和作息越來越混亂，內耗嚴重。','My life, space and routine are getting messier, and I feel a lot of inner drain.',26],
+ [24,'我對未來失去熱情，漸漸感到麻木。','I\'ve lost my passion for the future and feel increasingly numb.',13],
+ [25,'我容易用非黑即白的方式看事情，很難理解不同觀點。','I tend to see things in black and white and find it hard to understand other views.',8],
+ [26,'我很在意社會標準，害怕與眾不同，追逐外在認可。','I care a lot about social standards, fear being different and chase external approval.',6],
+ [27,'我覺得活著沒有意義，不知道自己為何而活。','I feel life has no meaning and don\'t know what I\'m living for.',13]
+];
+const ZONES = [
+ {zh:'靈魂核心', en:'Soul Core', d:'存在感、方向與生命力', de:'Sense of being, direction and vitality', L:[1,6,24,27]},
+ {zh:'認知結構', en:'Mind & Perception', d:'你怎麼看、怎麼解釋、怎麼預測', de:'How you see, interpret and predict', L:[2,3,4,7,8,25]},
+ {zh:'情緒能量', en:'Emotion & Energy', d:'神經警報與能量恢復', de:'Nervous alarms and energy recovery', L:[5,12]},
+ {zh:'自我結構', en:'Self & Identity', d:'身份、價值排序與內在語言', de:'Identity, value ranking and inner language', L:[9,10,20]},
+ {zh:'行動結構', en:'Action & Growth', d:'行動、習慣、回饋、學習與決策', de:'Action, habits, feedback, learning and decisions', L:[13,14,15,16,17,18]},
+ {zh:'關係與系統', en:'Relations & Systems', d:'關係、環境與整體系統穩定度', de:'Relationships, environment and overall system stability', L:[11,19,21,22,23,26]}
+];
+const OPTS = [['從不','Never'],['很少','Rarely'],['有時','Sometimes'],['經常','Often'],['總是','Always']];
+const LEVELS = [
+ {max:24, zh:'低熵流動', en:'Low entropy · Flowing', c:'lo',
+  dz:'你的靈魂結構整體穩定、有彈性。維持目前的節律，定期回來檢查，並留意分數相對較高的那幾層。',
+  de:'Your soul structure is stable and flexible overall. Keep your current rhythms, check in regularly, and watch the few layers that scored higher.'},
+ {max:44, zh:'輕度失衡', en:'Mild imbalance', c:'mid',
+  dz:'大部分結構運作正常，但有幾層開始累積混亂。現在是最容易更新的時候：先挑最高分的一層，連續 21 天做一個小行動。',
+  de:'Most structures work well, but a few layers are starting to build up disorder. This is the easiest time to update: pick the highest-scoring layer and do one small action for 21 days.'},
+ {max:64, zh:'中度高熵', en:'Moderate high entropy', c:'hi',
+  dz:'多個層級同時耗能，問題容易互相牽動。不要一次全部改，從最高分的 3 層開始，一次一個結構、一次一個行動。',
+  de:'Several layers are draining energy at once, and problems tend to pull on each other. Don\'t change everything at once — start with your top 3 layers, one structure and one action at a time.'},
+ {max:100, zh:'高度高熵', en:'High entropy', c:'hi',
+  dz:'你的系統現在承受很大的負荷，這不代表你壞掉了，而是底層結構太久沒有被照顧。先穩住睡眠與作息，並找一位信任的人或專業人員陪你一起整理。',
+  de:'Your system is under heavy load right now. This doesn\'t mean you are broken — your underlying structures simply haven\'t been cared for in a long time. Stabilize sleep and routine first, and find a trusted person or professional to work through it with you.'}
+];
+const pct = v => Math.round(v / 4 * 100);
+const levelOf = p => LEVELS.find(l => p <= l.max);
+const qDiag = n => D.diag[n-1];
+const Q2 = (zh, en) => EN() ? esc(en) : esc(zh) + (BI() ? `<div class="en">${esc(en)}</div>` : '');
+function quizResult(ans){
+  const layers = QZ.map((q,i) => ({q, d: qDiag(q[0]), v: ans[i] || 0}));
+  const total = pct(layers.reduce((a,x) => a + x.v, 0) / layers.length);
+  const zones = ZONES.map(z => ({z, p: pct(z.L.reduce((a,n) => a + (ans[n-1]||0), 0) / z.L.length)}));
+  const top = layers.filter(x => x.v >= 2).sort((a,b) => b.v - a.v || a.q[0] - b.q[0]).slice(0,3);
+  return {layers, total, zones, top, lv: levelOf(total)};
+}
+function renderQuiz(){
+  const zh = !EN(), Z = S.quiz;
+  // intro
+  if(Z.step < 0){
+    return `<div class="qz card">
+      <div class="qz-kicker">${zh?'27 題 · 約 5 分鐘':'27 questions · about 5 minutes'}</div>
+      <h2>${zh?'靈魂結構狀態測驗':'Soul Structure Test'}${BI()?`<div class="en">Soul Structure Test</div>`:''}</h2>
+      <p>${Q2('依照 27 層母體結構，每層一題，看看你現在哪些層是「低熵流動」、哪些層是「高熵失衡」。請依照最近一個月的真實狀態作答，沒有對錯。',
+             'One question for each of the 27 layers, to see which layers are flowing (low entropy) and which are out of balance (high entropy). Answer based on how you have really been this past month — there are no right or wrong answers.')}</p>
+      <ul class="qz-points">
+        <li>${Q2('得到你的「靈魂熵指數」（0–100）與狀態等級','Get your Soul Entropy Index (0–100) and state level')}</li>
+        <li>${Q2('看見 6 大區塊的平衡圖','See the balance of the 6 zones')}</li>
+        <li>${Q2('找出最需要更新的 3 層，附具體更新行動','Find the 3 layers that most need updating, with concrete actions')}</li>
+      </ul>
+      <div class="btnrow"><button class="btn primary" data-qz="start">${zh?'開始測驗':'Start'}</button>
+      ${S.last?`<button class="btn" data-qz="last">${zh?'查看上次結果':'View last result'}（${esc(S.last.date)}）</button>`:''}</div>
+      <p class="qz-fine">${Q2('本測驗是自我覺察工具，不是醫療或心理診斷。作答只存在你自己的裝置上。','This is a self-awareness tool, not a medical or psychological diagnosis. Your answers stay on your own device.')}</p>
+    </div>`;
+  }
+  // question
+  if(Z.step < QZ.length){
+    const i = Z.step, q = QZ[i], d = qDiag(q[0]), z = ZONES.find(z => z.L.includes(q[0]));
+    const ex = zh ? d.qs.slice(0,3).join('、') : d.qs_en.slice(0,3).join(', ');
+    return `<div class="qz card">
+      <div class="qz-prog"><div class="qz-bar"><div style="width:${i / QZ.length * 100}%"></div></div><span>${i+1} / ${QZ.length}</span></div>
+      <div class="qz-kicker">${d.mark} ${esc(zh ? d.zh : d.en)} · ${esc(zh ? z.zh : z.en)}</div>
+      <h3 class="qz-q">${Q2(q[1], q[2])}</h3>
+      <div class="qz-ex">${zh?'例如':'e.g.'}：${esc(ex)}</div>
+      <div class="qz-opts">${OPTS.map((o,k) => `<button class="qz-opt ${Z.ans[i]===k?'on':''}" data-qa="${k}"><span class="dot d${k}"></span>${esc(zh ? o[0] : o[1])}${BI()?` <span class="en">${o[1]}</span>`:''}</button>`).join('')}</div>
+      <div class="btnrow"><button class="btn" data-qz="back">← ${zh?'上一題':'Back'}</button>
+      ${Z.ans[i]!=null && i < QZ.length-1 ? `<button class="btn" data-qz="next">${zh?'下一題':'Next'} →</button>` : ''}</div>
+    </div>`;
+  }
+  // result
+  const R = quizResult(Z.ans), lv = R.lv, pz = x => esc(zh ? x.zh : x.en);
+  const exist = Z.ans[26] >= 3;
+  let h = `<div class="qz card qz-res">
+    <div class="qz-kicker">${zh?'你的靈魂結構狀態':'Your soul structure state'}${Z.date?` · ${esc(Z.date)}`:''}</div>
+    <div class="qz-score"><div class="qz-num ${lv.c}">${R.total}</div><div><div class="qz-lv ${lv.c}">${pz(lv)}</div>
+      <div class="en">${zh?'靈魂熵指數（0 = 完全流動，100 = 高度混亂）':'Soul Entropy Index (0 = fully flowing, 100 = highly chaotic)'}</div></div></div>
+    <div class="qz-gauge"><div style="left:${R.total}%"></div></div>
+    <p>${Q2(lv.dz, lv.de)}</p></div>`;
+  if(exist) h += `<div class="card qz-care">${Q2('你在「存在層」的分數偏高。覺得活著沒有意義，是很沉重的感受，你不需要一個人扛。如果這種感覺持續或變強烈，請聯絡信任的人，或撥打 1925 安心專線（台灣，24 小時免付費）。',
+      'Your score on the Existence Layer is high. Feeling that life has no meaning is heavy, and you don\'t have to carry it alone. If the feeling persists or grows stronger, please reach out to someone you trust or a local crisis line (in Taiwan: 1925, free, 24 hours).')}</div>`;
+  h += `<h3 class="qz-h">${zh?'6 大區塊平衡':'Balance across 6 zones'}</h3><div class="card">` + R.zones.map(x => {
+    const l = levelOf(x.p);
+    return `<div class="qz-zone"><div class="qz-zn"><b>${pz(x.z)}</b><span class="en">${esc(zh ? x.z.d : x.z.de)}</span></div>
+      <div class="dbar"><div class="track"><div class="fill ${l.c}" style="width:${Math.max(x.p,2)}%"></div></div><span class="qz-p">${x.p}</span></div></div>`; }).join('') + `</div>`;
+  h += `<h3 class="qz-h">${zh?'最需要更新的 3 層':'The 3 layers that most need updating'}</h3>`;
+  if(!R.top.length) h += `<div class="card">${Q2('沒有任何一層達到「有時」以上，你的結構目前相當穩定。','No layer reached "Sometimes" or higher — your structure is quite stable right now.')}</div>`;
+  else h += `<div class="list">` + R.top.map((x,k) => {
+    const s = D.structs[x.q[3]-1];
+    return `<div class="card qz-top"><div class="qz-kicker">#${k+1} · ${esc(zh ? OPTS[x.v][0] : OPTS[x.v][1])}</div>
+      <h4>${x.d.mark} ${esc(zh ? x.d.zh : x.d.en)} · <span class="hi-t">${esc(zh ? x.d.core : x.d.core_en)}</span></h4>
+      <div class="ess">${Q2(s.A.zh[3], s.A.en[3])}</div>
+      <div class="lang"><span class="old">${lq()}${esc(P(s.B.zh[0], s.B.en[0].replace(/^"|"$/g,'')))}${rq()}</span> → <span class="new">${lq()}${esc(P(s.B.zh[1], s.B.en[1].replace(/^"|"$/g,'')))}${rq()}</span></div>
+      <div><b>${zh?'今天就做':'Start today'}：</b>${Q2(s.B.zh[2], s.B.en[2])}</div>
+      <div class="qz-strat">${s.C.zh.slice(0,4).map((c,j) => `<span class="chip">${esc(P(c, s.C.en[j]))}</span>`).join('')}</div>
+      <button class="btn" data-rel="${esc(x.d.zh.replace(/層$/,''))}">${zh?'看相關內容 →':'Related content →'}</button></div>`; }).join('') + `</div>`;
+  h += `<h3 class="qz-h">${zh?'27 層完整分數':'All 27 layers'}</h3><div class="card qz-all">` +
+    R.layers.slice().sort((a,b) => b.v - a.v || a.q[0] - b.q[0]).map(x => `<div class="qz-row"><span>${x.d.mark} ${esc(zh ? x.d.zh : x.d.en)}</span>
+      <span class="qz-pill v${x.v}">${esc(zh ? OPTS[x.v][0] : OPTS[x.v][1])}</span></div>`).join('') + `</div>`;
+  h += `<div class="btnrow"><button class="btn primary" data-qz="restart">${zh?'重新測驗':'Retake'}</button>
+    <button class="btn" data-qz="copy">${zh?'複製結果':'Copy result'}</button>
+    <button class="btn" data-qz="diag">${zh?'前往詳細勾選表 →':'Detailed checklist →'}</button></div>
+    <p class="qz-fine">${Q2('本測驗是自我覺察工具，不是醫療或心理診斷。','This is a self-awareness tool, not a medical or psychological diagnosis.')}</p>`;
+  return h;
+}
+function quizText(){
+  const zh = !EN(), R = quizResult(S.quiz.ans);
+  const lines = [zh ? `【靈魂結構狀態測驗】${S.quiz.date||''}` : `[Soul Structure Test] ${S.quiz.date||''}`,
+    (zh ? '靈魂熵指數：' : 'Soul Entropy Index: ') + R.total + ' · ' + (zh ? R.lv.zh : R.lv.en),
+    ...R.zones.map(x => `${zh ? x.z.zh : x.z.en}: ${x.p}`),
+    (zh ? '最需要更新：' : 'Top layers: ') + (R.top.map(x => zh ? x.d.zh : x.d.en).join(zh ? '、' : ', ') || '—'),
+    location.href.split('#')[0]];
+  return lines.join('\n');
+}
+function quizAct(a){
+  const Z = S.quiz;
+  if(a === 'start' || a === 'restart'){ S.quiz = {step:0, ans:[]}; }
+  else if(a === 'back'){ Z.step = Math.max(-1, Z.step - 1); }
+  else if(a === 'next'){ Z.step++; }
+  else if(a === 'last'){ S.quiz = {step: QZ.length, ans: S.last.ans.slice(), date: S.last.date}; }
+  else if(a === 'diag'){ S.tab = 'diag'; store.set('tab2', S.tab); }
+  else if(a === 'copy'){
+    const txt = quizText(), done = () => { const b = document.querySelector('[data-qz="copy"]'); if(b) b.textContent = EN() ? 'Copied ✓' : '已複製 ✓'; };
+    try{ navigator.clipboard.writeText(txt).then(done, () => { prompt('', txt); }); }catch(e){ prompt('', txt); }
+    return;
+  }
+  store.set('quiz', S.quiz); render(); window.scrollTo({top:0});
+}
+function quizAnswer(k){
+  const Z = S.quiz; Z.ans[Z.step] = k;
+  if(Z.step === QZ.length - 1){
+    const d = new Date(); Z.date = `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`;
+    S.last = {date: Z.date, ans: Z.ans.slice()}; store.set('quizLast', S.last);
+  }
+  Z.step++; store.set('quiz', Z);
+  setTimeout(() => { render(); window.scrollTo({top:0}); }, 160);
+  document.querySelectorAll('.qz-opt').forEach(b => b.classList.toggle('on', +b.dataset.qa === k));
 }
 
 // ---------- diagnosis ----------
@@ -377,7 +593,7 @@ function renderCore(){
 
 function render(){
   renderChrome();
-  const f = {diag: renderDiag, st: renderSt, lib: renderLib, core: renderCore}[S.tab] || renderDiag;
+  const f = {quiz: renderQuiz, diag: renderDiag, st: renderSt, lib: renderLib, core: renderCore}[S.tab] || renderQuiz;
   document.getElementById('main').innerHTML = f();
   document.getElementById('qx').style.display = S.q ? 'block' : 'none';
 }
@@ -390,7 +606,7 @@ document.getElementById('q').addEventListener('input', e => {
 });
 document.getElementById('qx').addEventListener('click', () => { const q = document.getElementById('q'); q.value = ''; S.q = ''; render(); q.focus(); });
 document.getElementById('modes').addEventListener('click', e => { const m = e.target.closest('[data-m]'); if(!m) return; S.mode = m.dataset.m; store.set('mode', S.mode); render(); });
-document.getElementById('tabs').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if(!b) return; S.tab = b.dataset.t; store.set('tab', S.tab); S.libShown = 20; render(); window.scrollTo({top:0}); });
+document.getElementById('tabs').addEventListener('click', e => { const b = e.target.closest('[data-t]'); if(!b) return; S.tab = b.dataset.t; store.set('tab2', S.tab); S.libShown = 20; render(); window.scrollTo({top:0}); });
 document.getElementById('main').addEventListener('change', e => {
   const c = e.target.closest('input[data-n]'); if(!c) return;
   const n = c.dataset.n, i = +c.dataset.i;
@@ -398,11 +614,13 @@ document.getElementById('main').addEventListener('change', e => {
   const y = window.scrollY; render(); window.scrollTo({top:y});
 });
 document.getElementById('main').addEventListener('click', e => {
-  const el = e.target.closest('[data-g],[data-p],[data-o],[data-rel],#more,#reset'); if(!el) return;
+  const qa = e.target.closest('[data-qa]'); if(qa){ quizAnswer(+qa.dataset.qa); return; }
+  const qz = e.target.closest('[data-qz]'); if(qz){ quizAct(qz.dataset.qz); return; }
+  const el =e.target.closest('[data-g],[data-p],[data-o],[data-rel],#more,#reset'); if(!el) return;
   if(el.dataset.g !== undefined){ S.group = +el.dataset.g; }
   else if(el.dataset.p !== undefined){ S.part = +el.dataset.p; S.libShown = 20; }
   else if(el.dataset.o !== undefined){ const y = window.scrollY; S.open[el.dataset.o] = !S.open[el.dataset.o]; render(); window.scrollTo({top:y}); return; }
-  else if(el.dataset.rel !== undefined){ S.q = el.dataset.rel; document.getElementById('q').value = S.q; S.tab = 'lib'; S.part = 0; S.libShown = 20; store.set('tab', S.tab); render(); window.scrollTo({top:0}); return; }
+  else if(el.dataset.rel !== undefined){ S.q = el.dataset.rel; document.getElementById('q').value = S.q; S.tab = 'lib'; S.part = 0; S.libShown = 20; store.set('tab2', S.tab); render(); window.scrollTo({top:0}); return; }
   else if(el.id === 'more'){ const y = window.scrollY; S.libShown += 20; render(); window.scrollTo({top:y}); return; }
   else if(el.id === 'reset'){ S.checks = {}; store.set('checks', S.checks); }
   render();
